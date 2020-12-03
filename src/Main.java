@@ -17,11 +17,11 @@ public class Main extends PApplet {
     }
 
     public void settings() {
-        size (1200, 1000);
+        size (1000, 1000);
     }
 
     public void setup() {
-        background(20, 30, 20);
+        background(0, 0, 0);
     }
 
     public void draw() {
