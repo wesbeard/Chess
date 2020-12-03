@@ -9,8 +9,8 @@ public class Main extends PApplet {
     final int squareSize = boardSize/numSpaces;
     int fillColor = 0;
 
-    Color white = new Color(255, 255, 255);
-    Color black = new Color(0, 0, 0);
+    Color light = new Color(255, 255, 255);
+    Color dark = new Color(50, 100, 50);
 
     public static void main(String[] args) {
         PApplet.main("Main");
@@ -36,18 +36,18 @@ public class Main extends PApplet {
                 fill(fillColor);
                 rect(j * squareSize, i * squareSize, squareSize, squareSize);
 
-                if(fillColor == black.getRGB()){
-                    fillColor = white.getRGB();
+                if(fillColor == dark.getRGB()){
+                    fillColor = light.getRGB();
                 }
                 else{
-                    fillColor = black.getRGB();
+                    fillColor = dark.getRGB();
                 }
             }
-            if(numSpaces %2 == 0 && fillColor == black.getRGB()){
-                fillColor = white.getRGB();
+            if(numSpaces %2 == 0 && fillColor == dark.getRGB()){
+                fillColor = light.getRGB();
             }
-            else if(numSpaces %2 == 0 && fillColor == white.getRGB()){
-                fillColor = black.getRGB();
+            else if(numSpaces %2 == 0 && fillColor == light.getRGB()){
+                fillColor = dark.getRGB();
             }
 
         }
