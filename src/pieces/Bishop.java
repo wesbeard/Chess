@@ -21,7 +21,7 @@ public class Bishop extends Piece {
     @Override
     public boolean move(int targetX, int targetY, ArrayList<Piece> pieces, Piece toTake) {
 
-        if ((targetX - x == targetY - y) || (-targetX + x == targetY - y)) {
+        if ((targetX - x == targetY - y) || (-targetX + x == targetY - y) && !blockedDiagonal(targetX, targetY, pieces, toTake)) {
             take(pieces, toTake);
             super.x = targetX;
             super.y = targetY;

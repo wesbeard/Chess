@@ -17,49 +17,81 @@ public abstract class Piece extends PApplet{
 
     public abstract boolean move(int targetX, int targetY, ArrayList<Piece> pieces, Piece toTake);
 
-    public void take(ArrayList<Piece> pieces, Piece toTake) {
+    public boolean take(ArrayList<Piece> pieces, Piece toTake) {
         if (toTake != null) {
             pieces.remove(toTake);
+            return true;
         }
+        return false;
     }
 
-    public boolean isPieceOnSquare(int pieceX, int pieceY, ArrayList<Piece> pieces) {
+    public boolean isPieceOnSquare(int pieceX, int pieceY, ArrayList<Piece> pieces, Piece toTake) {
         for (Piece piece : pieces) {
-            if (piece.x == pieceX && piece.y == pieceY) {
+            if ((piece.x == pieceX && piece.y == pieceY)) {
                 return true;
             }
         }
         return false;
     }
 
-    public boolean blockedHorizontal(int targetX, int targetY, ArrayList<Piece> pieces) {
-        return true;
-    }
+    public boolean blockedHorizontal(int targetX, int targetY, ArrayList<Piece> pieces, Piece toTake) {
+        int i;
+        int tempX = x;
+        int tempY = y;
+        int takeMod = 0;
 
-    public boolean blockedDiagonal(int targetX, int targetY, ArrayList<Piece> pieces) {
-
-        int directionX;
-        int directionY;
-
-        if (targetX > x) {
-            directionX = 1;
-        }
-        else {
-            directionX = -1;
-        }
-        if (targetY > y) {
-            directionY = 1;
-        }
-        else {
-            directionY = -1;
+        if (toTake != null) {
+            takeMod = 1;
         }
 
-        for (int i = 1; i < abs(targetX - x) - 1; i++) {
-            if (isPieceOnSquare(x + i * directionX,y + i * directionY, pieces)) {
-                System.out.println("Path blocked");
-                return false;
+        if (targetX == x) {
+            if (targetY > y) {
+                tempY++;
+               for (i = 0; i < (targetY - y) - takeMod; i++){
+                   if (isPieceOnSquare(tempX, tempY, pieces, toTake)){
+                       System.out.println("Path blocked");
+                       return true;
+                   }
+                   tempY++;
+               }
+            }
+            if (targetY < y) {
+                tempY--;
+                for (i = 0; i < (y - targetY) - takeMod; i++){
+                    if (isPieceOnSquare(tempX, tempY, pieces, toTake)){
+                        System.out.println("Path blocked");
+                        return true;
+                    }
+                    tempY--;
+                }
             }
         }
-        return true;
+        else if (targetY == y) {
+            if (targetX > x) {
+                tempX++;
+                for (i = 0; i < (targetX - x) - takeMod; i++){
+                    if (isPieceOnSquare(tempX, tempY, pieces, toTake)){
+                        System.out.println("Path blocked");
+                        return true;
+                    }
+                    tempX++;
+                }
+            }
+            if (targetX < x) {
+                tempX--;
+                for (i = 0; i < (x - targetX) - takeMod; i++){
+                    if (isPieceOnSquare(tempX, tempY, pieces, toTake)){
+                        System.out.println("Path blocked");
+                        return true;
+                    }
+                    tempX--;
+                }
+            }
+        }
+        return false;
+    }
+
+    public boolean blockedDiagonal(int targetX, int targetY, ArrayList<Piece> pieces, Piece toTake) {
+        return false;
     }
 }
