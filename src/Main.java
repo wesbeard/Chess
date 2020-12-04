@@ -5,7 +5,7 @@ import java.util.ArrayList;
 
 public class Main extends PApplet {
 
-    final int boardSize = 800;
+    final int boardSize = 1000;
     final int numSpaces = 8;
     final int squareSize = boardSize/numSpaces;
     int fillColor = 0;
