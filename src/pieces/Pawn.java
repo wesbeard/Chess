@@ -46,7 +46,7 @@ public class Pawn extends Piece  {
         else if ((targetX == x + 1 || targetX == x - 1) && toTake != null) {
             if (side == "light") {
                 if (targetY == y - 1) {
-                    pieces.remove(toTake);
+                    take(pieces, toTake);
                     super.x = targetX;
                     super.y = targetY;
                     moved = true;
@@ -55,7 +55,7 @@ public class Pawn extends Piece  {
             }
             else {
                 if (targetY == y + 1) {
-                    pieces.remove(toTake);
+                    take(pieces, toTake);
                     super.x = targetX;
                     super.y = targetY;
                     moved = true;

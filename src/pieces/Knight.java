@@ -24,9 +24,7 @@ public class Knight extends Piece {
         int absY = abs(y - targetY);
 
         if((absX == 2 && absY == 1) || (absX == 1 && absY == 2)) {
-            if(toTake != null) {
-                pieces.remove(toTake);
-            }
+            take(pieces, toTake);
             super.x = targetX;
             super.y = targetY;
             moved = true;

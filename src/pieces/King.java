@@ -21,9 +21,7 @@ public class King extends Piece {
     @Override
     public boolean move(int targetX, int targetY, ArrayList<Piece> pieces, Piece toTake) {
         if((abs(x - targetX) <= 1) && (abs(y - targetY) <= 1)) {
-            if(toTake != null) {
-                pieces.remove(toTake);
-            }
+            take(pieces, toTake);
             super.x = targetX;
             super.y = targetY;
             moved = true;

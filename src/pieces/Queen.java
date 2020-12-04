@@ -21,9 +21,7 @@ public class Queen extends Piece {
     @Override
     public boolean move(int targetX, int targetY, ArrayList<Piece> pieces, Piece toTake) {
         if ((targetX - x == targetY - y || -targetX + x == targetY - y) || (targetX == x || targetY == y)) {
-            if(toTake != null) {
-                pieces.remove(toTake);
-            }
+            take(pieces, toTake);
             super.x = targetX;
             super.y = targetY;
             moved = true;
