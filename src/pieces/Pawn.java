@@ -21,6 +21,11 @@ public class Pawn extends Piece  {
     @Override
     public boolean move(int targetX, int targetY, ArrayList<Piece> pieces, Piece toTake){
         if (targetX == x) {
+            if(toTake != null){
+                if(toTake.x == x){
+                    return false;
+                }
+            }
             if (side == "light") {
                 if(targetY == y - 1 || (targetY == y - 2 && !moved)) {
                     super.x = targetX;

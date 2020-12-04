@@ -8,7 +8,6 @@ public class Main extends PApplet {
     final int boardSize = 1000;
     final int numSpaces = 8;
     final int squareSize = boardSize/numSpaces;
-    int fillColor = 0;
 
     ArrayList<Piece> pieces = new ArrayList<Piece>();
 
@@ -19,6 +18,7 @@ public class Main extends PApplet {
     int targetX;
     int targetY;
 
+    int fillColor = 0;
     Color light = new Color(255, 255, 221);
     Color dark = new Color(104, 136, 72);
     Color highlight = new Color(200, 100, 100);
