@@ -38,6 +38,26 @@ public class Pawn extends Piece  {
                 }
             }
         }
+        else if (targetX == x + 1 || targetX == x - 1) {
+            if (side == "light") {
+                if (targetY == y - 1) {
+                    pieces.remove(toTake);
+                    super.x = targetX;
+                    super.y = targetY;
+                    moved = true;
+                    return true;
+                }
+            }
+            else {
+                if (targetY == y + 1) {
+                    pieces.remove(toTake);
+                    super.x = targetX;
+                    super.y = targetY;
+                    moved = true;
+                    return true;
+                }
+            }
+        }
         return false;
     }
 }
