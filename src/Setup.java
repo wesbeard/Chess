@@ -9,95 +9,54 @@ public class Setup {
          */
 
         // Pawns
-        Piece dPawn1 = new Pawn("dark", 0 , 1);
-        pieces.add(dPawn1);
-        Piece dPawn2 = new Pawn("dark", 1 , 1);
-        pieces.add(dPawn2);
-        Piece dPawn3 = new Pawn("dark", 2 , 1);
-        pieces.add(dPawn3);
-        Piece dPawn4 = new Pawn("dark", 3 , 1);
-        pieces.add(dPawn4);
-        Piece dPawn5 = new Pawn("dark", 4 , 1);
-        pieces.add(dPawn5);
-        Piece dPawn6 = new Pawn("dark", 5 , 1);
-        pieces.add(dPawn6);
-        Piece dPawn7 = new Pawn("dark", 6 , 1);
-        pieces.add(dPawn7);
-        Piece dPawn8 = new Pawn("dark", 7 , 1);
-        pieces.add(dPawn8);
+        for (int i = 0; i < 8; i++) {
+            pieces.add(PieceFactory.getPiece("P","dark", i, 1));
+        }
 
         // Rooks
-        Piece dRook1 = new Rook("dark",0, 0);
-        pieces.add(dRook1);
-        Piece dRook2 = new Rook("dark",7, 0);
-        pieces.add(dRook2);
+        pieces.add(PieceFactory.getPiece("R","dark", 0, 0));
+        pieces.add(PieceFactory.getPiece("R","dark", 7, 0));
 
         // Knights
-        Piece dKnight1 = new Knight("dark", 1, 0);
-        pieces.add(dKnight1);
-        Piece dKnight2 = new Knight("dark", 6, 0);
-        pieces.add(dKnight2);
+        pieces.add(PieceFactory.getPiece("N","dark", 1, 0));
+        pieces.add(PieceFactory.getPiece("N","dark", 6, 0));
 
         // Bishops
-        Piece dBishop1 = new Bishop("dark", 2, 0);
-        pieces.add(dBishop1);
-        Piece dBishop2 = new Bishop("dark", 5, 0);
-        pieces.add(dBishop2);
+        pieces.add(PieceFactory.getPiece("B","dark", 2, 0));
+        pieces.add(PieceFactory.getPiece("B","dark", 5, 0));
 
         // Queen
-        Piece dQueen = new Queen("dark", 3, 0);
-        pieces.add(dQueen);
+        pieces.add(PieceFactory.getPiece("Q","dark", 3, 0));
 
         // King
-        Piece dKing = new King("dark", 4, 0);
-        pieces.add(dKing);
+        pieces.add(PieceFactory.getPiece("K","dark", 4, 0));
+
 
         /*
         Create Light Pieces
         */
 
         // Pawns
-        Piece lPawn1 = new Pawn("light", 0 , 6);
-        pieces.add(lPawn1);
-        Piece lPawn2 = new Pawn("light", 1 , 6);
-        pieces.add(lPawn2);
-        Piece lPawn3 = new Pawn("light", 2 , 6);
-        pieces.add(lPawn3);
-        Piece lPawn4 = new Pawn("light", 3 , 6);
-        pieces.add(lPawn4);
-        Piece lPawn5 = new Pawn("light", 4 , 6);
-        pieces.add(lPawn5);
-        Piece lPawn6 = new Pawn("light", 5 , 6);
-        pieces.add(lPawn6);
-        Piece lPawn7 = new Pawn("light", 6 , 6);
-        pieces.add(lPawn7);
-        Piece lPawn8 = new Pawn("light", 7 , 6);
-        pieces.add(lPawn8);
+        for (int i = 0; i < 8; i++) {
+            pieces.add(PieceFactory.getPiece("P","light", i, 6));
+        }
 
         // Rooks
-        Piece lRook1 = new Rook("light",0, 7);
-        pieces.add(lRook1);
-        Piece lRook2 = new Rook("light",7, 7);
-        pieces.add(lRook2);
+        pieces.add(PieceFactory.getPiece("R","light", 0, 7));
+        pieces.add(PieceFactory.getPiece("R","light", 7, 7));
 
         // Knights
-        Piece lKnight1 = new Knight("light", 1, 7);
-        pieces.add(lKnight1);
-        Piece lKnight2 = new Knight("light", 6, 7);
-        pieces.add(lKnight2);
+        pieces.add(PieceFactory.getPiece("N","light", 1, 7));
+        pieces.add(PieceFactory.getPiece("N","light", 6, 7));
 
         // Bishops
-        Piece lBishop1 = new Bishop("light", 2, 7);
-        pieces.add(lBishop1);
-        Piece lBishop2 = new Bishop("light", 5, 7);
-        pieces.add(lBishop2);
+        pieces.add(PieceFactory.getPiece("B","light", 2, 7));
+        pieces.add(PieceFactory.getPiece("B","light", 5, 7));
 
         // Queen
-        Piece lQueen = new Queen("light", 3, 7);
-        pieces.add(lQueen);
+        pieces.add(PieceFactory.getPiece("Q","light", 3, 7));
 
         // King
-        Piece lKing = new King("light", 4, 7);
-        pieces.add(lKing);
+        pieces.add(PieceFactory.getPiece("K","light", 4, 7));
     }
 }
