@@ -1,5 +1,7 @@
 package pieces;
 
+import java.util.ArrayList;
+
 public class Rook extends Piece {
 
     public Rook (String sideColor, int x, int y) {
@@ -14,5 +16,19 @@ public class Rook extends Piece {
         else {
             super.shapeFile = "images/piecesets/" + super.pieceSet + "/w" + type + ".svg";
         }
+    }
+
+    @Override
+    public boolean move(int targetX, int targetY, ArrayList<Piece> pieces, Piece toTake) {
+        if (targetX == x || targetY == y) {
+            if(toTake != null) {
+                pieces.remove(toTake);
+            }
+            super.x = targetX;
+            super.y = targetY;
+            moved = true;
+            return true;
+        }
+        return false;
     }
 }

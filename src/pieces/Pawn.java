@@ -1,5 +1,7 @@
 package pieces;
 
+import java.util.ArrayList;
+
 public class Pawn extends Piece  {
 
     public Pawn (String sideColor, int x, int y) {
@@ -16,4 +18,26 @@ public class Pawn extends Piece  {
         }
     }
 
+    @Override
+    public boolean move(int targetX, int targetY, ArrayList<Piece> pieces, Piece toTake){
+        if (targetX == x) {
+            if (side == "light") {
+                if(targetY == y - 1 || (targetY == y - 2 && !moved)) {
+                    super.x = targetX;
+                    super.y = targetY;
+                    moved = true;
+                    return true;
+                }
+            }
+            else {
+                if(targetY == y + 1 || (targetY == y + 2 && !moved)) {
+                    super.x = targetX;
+                    super.y = targetY;
+                    moved = true;
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
 }
