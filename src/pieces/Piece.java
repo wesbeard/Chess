@@ -32,6 +32,10 @@ public abstract class Piece extends PApplet{
         return false;
     }
 
+    public boolean blockedHorizontal(int targetX, int targetY, ArrayList<Piece> pieces) {
+        return true;
+    }
+
     public boolean blockedDiagonal(int targetX, int targetY, ArrayList<Piece> pieces) {
 
         int directionX;

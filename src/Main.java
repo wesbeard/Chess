@@ -5,12 +5,13 @@ import java.util.ArrayList;
 
 public class Main extends PApplet {
 
+    // Board settings
     final int boardSize = 1000;
     final int numSpaces = 8;
     final int squareSize = boardSize/numSpaces;
 
+    // Piece/location variables
     ArrayList<Piece> pieces = new ArrayList<Piece>();
-
     Piece selected;
     Piece toTake;
     boolean lightsTurn = true;
@@ -18,6 +19,7 @@ public class Main extends PApplet {
     int targetX;
     int targetY;
 
+    // Appearance/color variables
     int fillColor = 0;
     Color light = new Color(255, 255, 221);
     Color dark = new Color(104, 136, 72);
@@ -34,6 +36,7 @@ public class Main extends PApplet {
     public void setup() {
         background(0, 0, 0);
         Setup.setPiecePositions(pieces);
+        loadPieceFiles();
     }
 
     public void draw() {
@@ -61,16 +64,19 @@ public class Main extends PApplet {
             int pieceY = (piece.y * squareSize) + squareSize;
 
             if ((mouseX > pieceX - squareSize && mouseX < pieceX) && (mouseY > pieceY - squareSize && mouseY < pieceY)) {
+                // Check if first move
                 if (selected == null && lightsTurn && piece.side == "light") {
                     selected = piece;
                     pieceClicked = true;
                     break;
                 }
+                // Check if clicked on same side's piece
                 else if (lightsTurn && piece.side == "light" || !lightsTurn && piece.side == "dark"){
                     selected = piece;
                     pieceClicked = true;
                     break;
                 }
+                // Check if clicked on opposing side's piece
                 else if (lightsTurn && piece.side == "dark" || !lightsTurn && piece.side == "light"){
                     pieceClicked = true;
                     toTake = piece;
@@ -79,9 +85,11 @@ public class Main extends PApplet {
             }
         }
 
-        //If piece is selected
+        //Check if piece is selected
         if (selected != null) {
+            // Check if a piece is clicked or a piece is to be taken
             if (!pieceClicked || toTake != null) {
+                // If move is successful switch sides
                 if (selected.move(targetX, targetY, pieces, toTake)) {
                     selected = null;
                     if (lightsTurn) {
@@ -94,9 +102,16 @@ public class Main extends PApplet {
         }
     }
 
-    public void drawPieces() {
+    // Calls once in setup to associate pieces to SVG files
+    public void loadPieceFiles() {
         for (Piece piece : pieces) {
             piece.shape = loadShape(piece.shapeFile);
+        }
+    }
+
+    // Calls every frame to draw pieces
+    public void drawPieces() {
+        for (Piece piece : pieces) {
             shape(piece.shape, piece.x * squareSize, piece.y * squareSize, squareSize, squareSize);
         }
     }
