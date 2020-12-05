@@ -1,0 +1,15 @@
+<component name="libraryTable">
+  <library name="Required Libraries">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/Required Libraries/android.jar!/" />
+      <root url="jar://$PROJECT_DIR$/Required Libraries/core.jar!/" />
+      <root url="jar://$PROJECT_DIR$/Required Libraries/javamp3-1.0.4.jar!/" />
+      <root url="jar://$PROJECT_DIR$/Required Libraries/jsyn-20171016.jar!/" />
+      <root url="jar://$PROJECT_DIR$/Required Libraries/sound.jar!/" />
+      <root url="file://$PROJECT_DIR$/Required Libraries" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+    <jarDirectory url="file://$PROJECT_DIR$/Required Libraries" recursive="false" />
+  </library>
+</component>
