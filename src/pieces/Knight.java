@@ -20,15 +20,35 @@ public class Knight extends Piece {
 
     @Override
     public boolean move(int targetX, int targetY, ArrayList<Piece> pieces, Piece toTake) {
+        boolean pinned = isPinned(pieces,targetX, targetY, toTake);
         int absX = abs(x - targetX);
         int absY = abs(y - targetY);
 
-        if((absX == 2 && absY == 1) || (absX == 1 && absY == 2)) {
-            take(pieces, toTake);
+        if(((absX == 2 && absY == 1) || (absX == 1 && absY == 2)) && !pinned) {
             super.x = targetX;
             super.y = targetY;
+            isCheck(pieces, toTake);
+            take(pieces,toTake);
             moved = true;
             return true;
+        }
+        System.out.println("Invalid Move N"  + convertRank(targetX) + convertFile(targetY));
+        return false;
+    }
+
+    @Override
+    public boolean isCheck(ArrayList<Piece> pieces, Piece toTake) {
+
+        Piece enemyKing = getKing(pieces, side);
+
+        if (enemyKing != null) {
+            int absX = abs(x - enemyKing.x);
+            int absY = abs(y - enemyKing.y);
+
+            if ((absX == 2 && absY == 1) || (absX == 1 && absY == 2)) {
+                System.out.println("Check by " + side + " Knight!");
+                return true;
+            }
         }
         return false;
     }

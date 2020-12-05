@@ -17,12 +17,64 @@ public abstract class Piece extends PApplet{
 
     public abstract boolean move(int targetX, int targetY, ArrayList<Piece> pieces, Piece toTake);
 
+    public abstract boolean isCheck(ArrayList<Piece> pieces, Piece toTake);
+
+    public boolean isPinned(ArrayList<Piece> pieces, int targetX, int targetY, Piece toTake) {
+         int originalX = x;
+         int originalY = y;
+         x = targetX;
+         y = targetY;
+
+         if (toTake != null) {
+             pieces.remove(toTake);
+         }
+
+         // Test if attempted move puts king in check
+         for (Piece piece : pieces) {
+             if (piece.side != side) {
+                 if (piece.isCheck(pieces, toTake)) {
+                     if (toTake != null) {
+                         pieces.add(toTake);
+                     }
+                     x = originalX;
+                     y = originalY;
+                     return true;
+                 }
+             }
+         }
+
+         if (toTake != null) {
+            pieces.add(toTake);
+         }
+
+
+         x = originalX;
+         y = originalY;
+         return false;
+    }
+
     public boolean take(ArrayList<Piece> pieces, Piece toTake) {
         if (toTake != null) {
             pieces.remove(toTake);
             return true;
         }
         return false;
+    }
+
+    public Piece getKing(ArrayList<Piece> pieces, String side) {
+        for (Piece piece : pieces) {
+            if (side == "light") {
+                if (piece.side == "dark" && piece.type == "K") {
+                    return piece;
+                }
+            }
+            else {
+                if (piece.side == "light" && piece.type == "K") {
+                    return piece;
+                }
+            }
+        }
+        return null;
     }
 
     public boolean isPieceOnSquare(int pieceX, int pieceY, ArrayList<Piece> pieces, Piece toTake) {
@@ -49,7 +101,6 @@ public abstract class Piece extends PApplet{
                 tempY++;
                for (i = 0; i < (targetY - y) - takeMod; i++){
                    if (isPieceOnSquare(tempX, tempY, pieces, toTake)){
-                       System.out.println("Path blocked");
                        return true;
                    }
                    tempY++;
@@ -59,7 +110,6 @@ public abstract class Piece extends PApplet{
                 tempY--;
                 for (i = 0; i < (y - targetY) - takeMod; i++){
                     if (isPieceOnSquare(tempX, tempY, pieces, toTake)){
-                        System.out.println("Path blocked");
                         return true;
                     }
                     tempY--;
@@ -71,7 +121,6 @@ public abstract class Piece extends PApplet{
                 tempX++;
                 for (i = 0; i < (targetX - x) - takeMod; i++){
                     if (isPieceOnSquare(tempX, tempY, pieces, toTake)){
-                        System.out.println("Path blocked");
                         return true;
                     }
                     tempX++;
@@ -81,7 +130,6 @@ public abstract class Piece extends PApplet{
                 tempX--;
                 for (i = 0; i < (x - targetX) - takeMod; i++){
                     if (isPieceOnSquare(tempX, tempY, pieces, toTake)){
-                        System.out.println("Path blocked");
                         return true;
                     }
                     tempX--;
@@ -92,6 +140,85 @@ public abstract class Piece extends PApplet{
     }
 
     public boolean blockedDiagonal(int targetX, int targetY, ArrayList<Piece> pieces, Piece toTake) {
+        int i;
+        int tempX = x;
+        int tempY = y;
+        int takeMod = 0;
+
+        if (toTake != null) {
+            takeMod = 1;
+        }
+
+        if (targetX > x && targetY > y) {
+            tempY++;
+            tempX++;
+            for (i = 0; i < (targetY - y) - takeMod; i++) {
+                if (isPieceOnSquare(tempX, tempY, pieces, toTake)) {
+                    return true;
+                }
+                tempY++;
+                tempX++;
+            }
+        }
+        else if (targetX < x && targetY < y) {
+            tempY--;
+            tempX--;
+            for (i = 0; i < (y - targetY) - takeMod; i++) {
+                if (isPieceOnSquare(tempX, tempY, pieces, toTake)) {
+                    return true;
+                }
+                tempY--;
+                tempX--;
+            }
+        }
+        else if (targetX < x && targetY > y) {
+            tempX--;
+            tempY++;
+            for (i = 0; i < (targetY - y) - takeMod; i++) {
+                if (isPieceOnSquare(tempX, tempY, pieces, toTake)) {
+                    return true;
+                }
+                tempX--;
+                tempY++;
+            }
+        }
+        else if (targetX > x && targetY < y) {
+            tempX++;
+            tempY--;
+            for (i = 0; i < (y - targetY) - takeMod; i++) {
+                if (isPieceOnSquare(tempX, tempY, pieces, toTake)) {
+                    return true;
+                }
+                tempX++;
+                tempY--;
+            }
+        }
         return false;
+    }
+
+    public char convertRank(int x) {
+        switch (x) {
+            case 0:
+                return'a';
+            case 1:
+                return'b';
+            case 2:
+                return'c';
+            case 3:
+                return'd';
+            case 4:
+                return'e';
+            case 5:
+                return'f';
+            case 6:
+                return'g';
+            case 7:
+                return'h';
+        }
+        return ' ';
+    }
+
+    public int convertFile(int y) {
+        return y++;
     }
 }
