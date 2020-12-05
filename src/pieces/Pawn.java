@@ -34,6 +34,7 @@ public class Pawn extends Piece  {
                     moveSound.play();
                     super.x = targetX;
                     super.y = targetY;
+                    isCheck(pieces, toTake);
                     moved = true;
                     if(y == 0) {
                         promote(pieces);
@@ -46,6 +47,7 @@ public class Pawn extends Piece  {
                     moveSound.play();
                     super.x = targetX;
                     super.y = targetY;
+                    isCheck(pieces, toTake);
                     moved = true;
                     if(y == 7) {
                         promote(pieces);
@@ -105,7 +107,7 @@ public class Pawn extends Piece  {
         Piece enemyKing = getKing(pieces, side);
 
         if (enemyKing != null) {
-            if ((enemyKing.x == x + 1 || enemyKing.x == x - 1) && toTake != null) {
+            if (enemyKing.x == x + 1 || enemyKing.x == x - 1) {
                 if (side == "light") {
                     if (enemyKing.y == y - 1) {
                         System.out.println("Check by " + side + " Pawn!");
