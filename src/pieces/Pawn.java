@@ -1,5 +1,7 @@
 package pieces;
 
+import processing.sound.SoundFile;
+
 import java.util.ArrayList;
 
 public class Pawn extends Piece  {
@@ -19,7 +21,7 @@ public class Pawn extends Piece  {
     }
 
     @Override
-    public boolean move(int targetX, int targetY, ArrayList<Piece> pieces, Piece toTake){
+    public boolean move(int targetX, int targetY, ArrayList<Piece> pieces, Piece toTake, SoundFile castleSound, SoundFile takeSound, SoundFile moveSound){
         boolean pinned = isPinned(pieces,targetX, targetY, toTake);
         if (targetX == x && !pinned) {
             if(toTake != null){
@@ -29,6 +31,7 @@ public class Pawn extends Piece  {
             }
             if (side == "light") {
                 if(targetY == y - 1 || (targetY == y - 2 && !moved)) {
+                    moveSound.play();
                     super.x = targetX;
                     super.y = targetY;
                     moved = true;
@@ -40,6 +43,7 @@ public class Pawn extends Piece  {
             }
             else {
                 if(targetY == y + 1 || (targetY == y + 2 && !moved)) {
+                    moveSound.play();
                     super.x = targetX;
                     super.y = targetY;
                     moved = true;
@@ -53,6 +57,7 @@ public class Pawn extends Piece  {
         else if ((targetX == x + 1 || targetX == x - 1) && toTake != null && !pinned) {
             if (side == "light") {
                 if (targetY == y - 1) {
+                    takeSound.play();
                     super.x = targetX;
                     super.y = targetY;
                     isCheck(pieces, toTake);
@@ -66,6 +71,7 @@ public class Pawn extends Piece  {
             }
             else {
                 if (targetY == y + 1) {
+                    takeSound.play();
                     super.x = targetX;
                     super.y = targetY;
                     isCheck(pieces, toTake);
@@ -98,21 +104,21 @@ public class Pawn extends Piece  {
 
         Piece enemyKing = getKing(pieces, side);
 
-        if ((enemyKing.x == x + 1 || enemyKing.x == x - 1) && toTake != null) {
-            if (side == "light") {
-                if (enemyKing.y == y - 1) {
-                    System.out.println("Check by " + side + " Pawn!");
-                    return true;
-                }
-            }
-            else {
-                if (enemyKing.y == y + 1) {
-                    System.out.println("Check by " + side + " Pawn!");
-                    return true;
+        if (enemyKing != null) {
+            if ((enemyKing.x == x + 1 || enemyKing.x == x - 1) && toTake != null) {
+                if (side == "light") {
+                    if (enemyKing.y == y - 1) {
+                        System.out.println("Check by " + side + " Pawn!");
+                        return true;
+                    }
+                } else {
+                    if (enemyKing.y == y + 1) {
+                        System.out.println("Check by " + side + " Pawn!");
+                        return true;
+                    }
                 }
             }
         }
-
 
         return false;
     }

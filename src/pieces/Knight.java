@@ -1,5 +1,7 @@
 package pieces;
 
+import processing.sound.SoundFile;
+
 import java.util.ArrayList;
 
 public class Knight extends Piece {
@@ -19,12 +21,18 @@ public class Knight extends Piece {
     }
 
     @Override
-    public boolean move(int targetX, int targetY, ArrayList<Piece> pieces, Piece toTake) {
+    public boolean move(int targetX, int targetY, ArrayList<Piece> pieces, Piece toTake, SoundFile castleSound, SoundFile takeSound, SoundFile moveSound) {
         boolean pinned = isPinned(pieces,targetX, targetY, toTake);
         int absX = abs(x - targetX);
         int absY = abs(y - targetY);
 
         if(((absX == 2 && absY == 1) || (absX == 1 && absY == 2)) && !pinned) {
+            if (toTake != null) {
+                takeSound.play();
+            }
+            else {
+                moveSound.play();
+            }
             super.x = targetX;
             super.y = targetY;
             isCheck(pieces, toTake);

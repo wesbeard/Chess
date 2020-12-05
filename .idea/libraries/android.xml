@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="android">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/processing-sound-master/library/android.jar!/" />
+      <root url="jar://$PROJECT_DIR$/processing-sound-master/library/javamp3-1.0.4.jar!/" />
+      <root url="jar://$PROJECT_DIR$/processing-sound-master/library/jsyn-20171016.jar!/" />
+      <root url="jar://$PROJECT_DIR$/processing-sound-master/library/processing-core.zip!/" />
+      <root url="jar://$PROJECT_DIR$/processing-sound-master/library/sound.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

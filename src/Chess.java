@@ -1,9 +1,16 @@
 import pieces.*;
 import processing.core.*;
+import processing.sound.*;
 import java.awt.*;
 import java.util.ArrayList;
 
-public class Game extends PApplet {
+
+public class Chess extends PApplet {
+
+    // Sounds
+    SoundFile moveSound;
+    SoundFile takeSound;
+    SoundFile castleSound;
 
     // Board settings
     final int boardSize = 1000;
@@ -21,14 +28,13 @@ public class Game extends PApplet {
 
     // Appearance/color variables
     PImage icon;
-    PImage cursor;
     int fillColor = 0;
     Color light = new Color(255, 255, 221);
     Color dark = new Color(104, 136, 72);
     Color highlight = new Color(200, 100, 100);
 
     public static void main(String[] args) {
-        PApplet.main("Game");
+        PApplet.main("Chess");
     }
 
     public void settings() {
@@ -36,11 +42,22 @@ public class Game extends PApplet {
     }
 
     public void setup() {
+        // Sounds
+        moveSound = new SoundFile(this, "sound/Move.mp3");
+        moveSound.amp((float) .2);
+        takeSound = new SoundFile(this, "sound/Take.mp3");
+        takeSound.amp((float) .4);
+        castleSound = new SoundFile(this, "sound/Castle.mp3");
+        castleSound.amp((float) .2);
+
+        // Window
         icon = loadImage("images/icon.png");
         surface.setIcon(icon);
         cursor(HAND);
         surface.setTitle("Chess!");
         background(0, 0, 0);
+
+        // Game
         Setup.setPiecePositions(pieces);
     }
 
@@ -95,7 +112,7 @@ public class Game extends PApplet {
             // Check if a piece is clicked or a piece is to be taken
             if (!pieceClicked || toTake != null) {
                 // If move is successful switch sides
-                if (selected.move(targetX, targetY, pieces, toTake)) {
+                if (selected.move(targetX, targetY, pieces, toTake, castleSound, takeSound, moveSound)) {
                     selected = null;
                     if (lightsTurn) {
                         lightsTurn = false;
