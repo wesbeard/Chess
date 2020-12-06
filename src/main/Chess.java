@@ -107,6 +107,16 @@ public class Chess extends PApplet {
         if (darkTimer.started) {
             darkTimerValue = darkTimer.getTime();
         }
+        if (darkTimer.isOver) {
+            darkTimer.isOver = false;
+            resetBoard();
+            Popup.text = "White Wins!";
+        }
+        if (lightTimer.isOver) {
+            darkTimer.isOver = false;
+            resetBoard();
+            Popup.text = "Black Wins!";
+        }
 
         background(BACKGROUND.getRGB());
         drawTurnIndicator();
@@ -317,11 +327,11 @@ public class Chess extends PApplet {
         strokeWeight(3);
         if (lightsTurn) {
             fill(LIGHT.getRGB());
-            rect(boardSize + 10, boardSize / 2 + 30, 10, (boardSize / 2) - 50, 50);
+            rect(boardSize + 20, boardSize / 2 + 30, 20, (boardSize / 2) - 50, 50);
         }
         else {
             fill(DARK.getRGB());
-            rect(boardSize + 10, 30, 10, (boardSize / 2) - 50, 50);
+            rect(boardSize + 20, 30, 20, (boardSize / 2) - 50, 50);
         }
     }
 

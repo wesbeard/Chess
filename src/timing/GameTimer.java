@@ -53,6 +53,7 @@ public class GameTimer {
     public int seconds;
     String formattedSeconds;
     String formattedMinutes;
+    public boolean isOver = false;
 
     public void start() {
         timer.schedule(new TimerTask() {
@@ -64,8 +65,10 @@ public class GameTimer {
     }
 
     public int setInterval() {
-        if (interval == 0)
+        if (interval == 0) {
+            isOver = true;
             timer.cancel();
+        }
         if (!paused)
             interval--;
 
@@ -84,8 +87,8 @@ public class GameTimer {
     public String getTime() {
         seconds = (int)interval % 60;
         minutes = (int)interval / 60;
-        String formattedSeconds = String.format("%02d", seconds);
-        String formattedMinutes = String.format("%02d", minutes);
+        formattedSeconds = String.format("%02d", seconds);
+        formattedMinutes = String.format("%02d", minutes);
         return (formattedMinutes + " : " + formattedSeconds);
     }
 
