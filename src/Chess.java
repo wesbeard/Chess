@@ -25,6 +25,7 @@ public class Chess extends PApplet {
     boolean pieceClicked;
     int targetX;
     int targetY;
+    boolean ableToSwitch;
 
     // Appearance/color variables
     PImage icon;
@@ -78,15 +79,22 @@ public class Chess extends PApplet {
     }
 
     public void keyPressed() {
+        ableToSwitch = false;
         if (key == CODED) {
             if (keyCode == LEFT) {
-                pieces = replay.stepBack();
+                ableToSwitch =  replay.stepBack(pieces);
                 // swap turns as you go back in time
-                lightsTurn = !lightsTurn;
+                if (ableToSwitch) {
+                    moveSound.play();
+                    lightsTurn = !lightsTurn;
+                }
             } else if (keyCode == RIGHT) {
-                pieces = replay.stepForward();
+                ableToSwitch = replay.stepForward(pieces);
                 // swap turns as you go back in time
-                lightsTurn = !lightsTurn;
+                if (ableToSwitch) {
+                    moveSound.play();
+                    lightsTurn = !lightsTurn;
+                }
             }
         }
     }

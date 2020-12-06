@@ -1,6 +1,7 @@
 import pieces.*;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class BoardReplay {
 
@@ -36,26 +37,36 @@ public class BoardReplay {
     }
 
     // returns the new board to be shown
-    public ArrayList<Piece> stepBack() {
+    public boolean stepBack(ArrayList<Piece> passedBoard) {
+        boolean valid = false;
+
         if(currentPosition > 0) {
             currentPosition -= 1;
+            valid = true;
         }
 
         ArrayList<Piece> newBoard = new ArrayList<Piece>();
         stringArrayToPieceArray(newBoard, allBoards.get(currentPosition));
 
-        return newBoard;
+        passedBoard.clear();
+        passedBoard.addAll(newBoard);
+        return valid;
     }
 
-    public ArrayList<Piece> stepForward() {
+    public boolean stepForward(ArrayList<Piece> passedBoard) {
+        boolean valid = false;
+
         if(currentPosition < allBoards.size()-1) {
             currentPosition += 1;
+            valid = true;
         }
 
         ArrayList<Piece> newBoard = new ArrayList<Piece>();
         stringArrayToPieceArray(newBoard, allBoards.get(currentPosition));
 
-        return newBoard;
+        passedBoard.clear();
+        passedBoard.addAll(newBoard);
+        return valid;
     }
 
 
