@@ -21,7 +21,7 @@ public class Pawn extends Piece  {
     }
 
     @Override
-    public boolean move(int targetX, int targetY, ArrayList<Piece> pieces, Piece toTake, SoundFile castleSound, SoundFile takeSound, SoundFile moveSound){
+    public boolean move(int targetX, int targetY, ArrayList<Piece> pieces, Piece toTake, SoundFile castleSound, SoundFile takeSound, SoundFile moveSound) {
         boolean pinned = isPinned(pieces,targetX, targetY, toTake);
         if (targetX == x && !pinned) {
             if(toTake != null){

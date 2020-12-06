@@ -58,5 +58,6 @@ public class Setup {
 
         // King
         pieces.add(PieceFactory.getPiece("K","light", 4, 7));
+
     }
 }

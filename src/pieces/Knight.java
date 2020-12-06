@@ -22,7 +22,7 @@ public class Knight extends Piece {
 
     @Override
     public boolean move(int targetX, int targetY, ArrayList<Piece> pieces, Piece toTake, SoundFile castleSound, SoundFile takeSound, SoundFile moveSound) {
-        boolean pinned = isPinned(pieces,targetX, targetY, toTake);
+        boolean pinned = isPinned(pieces, targetX, targetY, toTake);
         int absX = abs(x - targetX);
         int absY = abs(y - targetY);
 
@@ -36,7 +36,7 @@ public class Knight extends Piece {
             super.x = targetX;
             super.y = targetY;
             isCheck(pieces, toTake);
-            take(pieces,toTake);
+            take(pieces, toTake);
             moved = true;
             return true;
         }

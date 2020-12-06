@@ -221,4 +221,10 @@ public abstract class Piece extends PApplet{
     public int convertFile(int y) {
         return y++;
     }
+
+    public String getData() {
+        // ex. LR00 or DP31
+        // replaced "light" with L and "dark" with "D" to make them the same length, easier to work with
+        return type + ( side == "light" ? "L" : "D" ) + x + y;
+    }
 }

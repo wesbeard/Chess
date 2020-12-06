@@ -33,6 +33,8 @@ public class Chess extends PApplet {
     Color dark = new Color(104, 136, 72);
     Color highlight = new Color(200, 100, 100);
 
+    BoardReplay replay = new BoardReplay();
+
     public static void main(String[] args) {
         PApplet.main("Chess");
     }
@@ -44,11 +46,11 @@ public class Chess extends PApplet {
     public void setup() {
         // Sounds
         moveSound = new SoundFile(this, "sound/Move.mp3");
-        moveSound.amp((float) .2);
+        moveSound.amp((float) .4);
         takeSound = new SoundFile(this, "sound/Take.mp3");
-        takeSound.amp((float) .4);
+        takeSound.amp((float) .8);
         castleSound = new SoundFile(this, "sound/Castle.mp3");
-        castleSound.amp((float) .2);
+        castleSound.amp((float) .4);
 
         // Window
         icon = loadImage("images/icon.png");
@@ -59,6 +61,7 @@ public class Chess extends PApplet {
 
         // Game
         Setup.setPiecePositions(pieces);
+        replay.performRecordCommand(pieces);
     }
 
     public void draw() {
@@ -71,6 +74,20 @@ public class Chess extends PApplet {
             /* \/Optional circle highlighting\/ */
             // circle((selected.x * squareSize) + (squareSize / 2), (selected.y * squareSize) + (squareSize / 2), squareSize - 10);
             rect((selected.x * squareSize), (selected.y * squareSize), squareSize, squareSize);
+        }
+    }
+
+    public void keyPressed() {
+        if (key == CODED) {
+            if (keyCode == LEFT) {
+                pieces = replay.stepBack();
+                // swap turns as you go back in time
+                lightsTurn = !lightsTurn;
+            } else if (keyCode == RIGHT) {
+                pieces = replay.stepForward();
+                // swap turns as you go back in time
+                lightsTurn = !lightsTurn;
+            }
         }
     }
 
@@ -113,6 +130,8 @@ public class Chess extends PApplet {
             if (!pieceClicked || toTake != null) {
                 // If move is successful switch sides
                 if (selected.move(targetX, targetY, pieces, toTake, castleSound, takeSound, moveSound)) {
+                    // pass in entire board to be recorded at this pos
+                    replay.performRecordCommand(pieces);
                     selected = null;
                     if (lightsTurn) {
                         lightsTurn = false;

@@ -6,22 +6,22 @@ public class PieceFactory {
         if (pieceType == null) {
             return null;
         }
-        else if (pieceType == "P") {
+        else if (pieceType.equals("P")) {
             return new Pawn(sideColor, startX, startY);
         }
-        else if (pieceType == "K") {
+        else if (pieceType.equals("K")) {
             return new King(sideColor, startX, startY);
         }
-        else if (pieceType == "Q") {
+        else if (pieceType.equals("Q")) {
             return new Queen(sideColor, startX, startY);
         }
-        else if (pieceType == "N") {
+        else if (pieceType.equals("N")) {
             return new Knight(sideColor, startX, startY);
         }
-        else if (pieceType == "B") {
+        else if (pieceType.equals("B")) {
             return new Bishop(sideColor, startX, startY);
         }
-        else if (pieceType == "R") {
+        else if (pieceType.equals("R")) {
             return new Rook(sideColor, startX, startY);
         }
         return null;
