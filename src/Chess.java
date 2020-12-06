@@ -26,6 +26,7 @@ public class Chess extends PApplet {
     int targetX;
     int targetY;
     boolean ableToSwitch;
+    boolean isGameOver;
 
     // Appearance/color variables
     PImage icon;
@@ -100,6 +101,7 @@ public class Chess extends PApplet {
     }
 
     public void mousePressed() {
+
         pieceClicked = false;
         toTake = null;
         targetX = mouseX / squareSize;

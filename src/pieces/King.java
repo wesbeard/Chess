@@ -31,16 +31,17 @@ public class King extends Piece {
             if((targetX == 1 && targetY == 0) && !blockedHorizontal(1, 0, pieces, toTake)) {
                 castled = castle(pieces,1, 0, 0, 0, 2, 0, castleSound);
             }
-            else if((targetX == 6 && targetY == 0) && !blockedHorizontal(1, 0, pieces, toTake)) {
+            else if((targetX == 6 && targetY == 0) && !blockedHorizontal(6, 0, pieces, toTake)) {
+                System.out.println("castle test");
                 castled = castle(pieces, 6, 0, 7, 0, 5, 0, castleSound);
             }
         }
         // If light and not moved then check which side is being castled and pass ending coordinates
         else if (side == "light" && !moved) {
-            if((targetX == 1 && targetY == 7) && !blockedHorizontal(1, 0, pieces, toTake)) {
+            if((targetX == 1 && targetY == 7) && !blockedHorizontal(1, 7, pieces, toTake)) {
                 castled = castle(pieces, 1, 7, 0, 7, 2, 7, castleSound);
             }
-            else if((targetX == 6 && targetY == 7) && !blockedHorizontal(1, 0, pieces, toTake)) {
+            else if((targetX == 6 && targetY == 7) && !blockedHorizontal(6, 7, pieces, toTake)) {
                 castled = castle(pieces, 6, 7, 7, 7, 5, 7, castleSound);
             }
         }
@@ -74,6 +75,11 @@ public class King extends Piece {
 
     @Override
     public boolean isCheck(ArrayList<Piece> pieces, Piece toTake) {
+        Piece enemyKing = getKing(pieces, side);
+        if(((abs(x - enemyKing.x) <= 1) && (abs(y - enemyKing.y) <= 1))) {
+            System.out.println("Check by " + side + " king!");
+            return true;
+        }
         return false;
     }
 
