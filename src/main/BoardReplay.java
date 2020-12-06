@@ -1,4 +1,7 @@
+package main;
+
 import pieces.*;
+import processing.sound.SoundFile;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -8,32 +11,49 @@ public class BoardReplay {
     ArrayList<ArrayList<String>> allBoards;
     int currentPosition;
 
-    public BoardReplay() {
+    public BoardReplay(ArrayList<Piece> entireBoard) {
         allBoards = new ArrayList<ArrayList<String>>();
         currentPosition = -1;
-    }
 
-    public void performRecordCommand(ArrayList<Piece> entireBoard) {
         // add all pieces in string format (in a string ArrayList) to the allBoards ArrayList
         ArrayList<String> currentBoard = new ArrayList<String>();
         for (Piece piece : entireBoard) {
             currentBoard.add(piece.getData());
         }
-        // if someone makes a move while looking at the middle of the replay...
-        // delete all instances of the board after it
-        if(currentPosition != allBoards.size()-1) {
-            // I have to loop backwards because the size of allBoards changes as I delete elements
-            for(int i = allBoards.size()-1; i > currentPosition; i--) {
-                allBoards.remove(i);
-            }
-            System.out.println("Future boards have been removed");
-        }
         allBoards.add(currentBoard);
-
-        for(int i = 0; i < allBoards.size(); i++) {
-
-        }
         currentPosition += 1;
+    }
+
+    public boolean performRecordCommand(Piece pieceToMove,
+                                     int targetX,
+                                     int targetY,
+                                     ArrayList<Piece> entireBoard,
+                                     Piece toTake,
+                                     SoundFile castleSound,
+                                     SoundFile takeSound,
+                                     SoundFile moveSound) {
+        boolean successful = pieceToMove.move(targetX, targetY, entireBoard, toTake, castleSound, takeSound, moveSound);
+
+        if(successful) {
+            // add all pieces in string format (in a string ArrayList) to the allBoards ArrayList
+            ArrayList<String> currentBoard = new ArrayList<String>();
+            for (Piece piece : entireBoard) {
+                currentBoard.add(piece.getData());
+            }
+            // if someone makes a move while looking at the middle of the replay...
+            // delete all instances of the board after it
+            if (currentPosition != allBoards.size() - 1) {
+                // I have to loop backwards because the size of allBoards changes as I delete elements
+                for (int i = allBoards.size() - 1; i > currentPosition; i--) {
+                    allBoards.remove(i);
+                }
+                System.out.println("Future boards have been removed");
+            }
+            allBoards.add(currentBoard);
+
+            currentPosition += 1;
+        }
+        return successful;
     }
 
     // returns the new board to be shown

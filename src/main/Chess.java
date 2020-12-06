@@ -1,3 +1,5 @@
+package main;
+
 import pieces.*;
 import processing.core.*;
 import processing.sound.*;
@@ -35,10 +37,10 @@ public class Chess extends PApplet {
     Color dark = new Color(104, 136, 72);
     Color highlight = new Color(200, 100, 100);
 
-    BoardReplay replay = new BoardReplay();
+    BoardReplay replay;
 
     public static void main(String[] args) {
-        PApplet.main("Chess");
+        PApplet.main("main.Chess");
     }
 
     public void settings() {
@@ -58,12 +60,12 @@ public class Chess extends PApplet {
         icon = loadImage("images/icon.png");
         surface.setIcon(icon);
         cursor(HAND);
-        surface.setTitle("Chess!");
+        surface.setTitle("main.Chess!");
         background(0, 0, 0);
 
         // Game
         Setup.setPiecePositions(pieces);
-        replay.performRecordCommand(pieces);
+        replay = new BoardReplay(pieces);
     }
 
     public void draw() {
@@ -139,9 +141,7 @@ public class Chess extends PApplet {
             // Check if a piece is clicked or a piece is to be taken
             if (!pieceClicked || toTake != null) {
                 // If move is successful switch sides
-                if (selected.move(targetX, targetY, pieces, toTake, castleSound, takeSound, moveSound)) {
-                    // pass in entire board to be recorded at this pos
-                    replay.performRecordCommand(pieces);
+                if (replay.performRecordCommand(selected, targetX, targetY, pieces, toTake, castleSound, takeSound, moveSound)) {
                     selected = null;
                     if (lightsTurn) {
                         lightsTurn = false;

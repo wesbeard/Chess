@@ -3,8 +3,9 @@ package pieces;
 import processing.sound.SoundFile;
 
 import java.util.ArrayList;
+import main.Command;
 
-public class King extends Piece {
+public class King extends Piece implements Command {
 
     public King (String sideColor, int x, int y) {
         super.side = sideColor;
@@ -20,7 +21,6 @@ public class King extends Piece {
         }
     }
 
-    @Override
     public boolean move(int targetX, int targetY, ArrayList<Piece> pieces, Piece toTake, SoundFile castleSound, SoundFile takeSound, SoundFile moveSound) {
 
         boolean castled = false;

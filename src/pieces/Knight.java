@@ -3,8 +3,9 @@ package pieces;
 import processing.sound.SoundFile;
 
 import java.util.ArrayList;
+import main.Command;
 
-public class Knight extends Piece {
+public class Knight extends Piece implements Command {
 
     public Knight (String sideColor, int x, int y) {
         super.side = sideColor;
@@ -20,7 +21,6 @@ public class Knight extends Piece {
         }
     }
 
-    @Override
     public boolean move(int targetX, int targetY, ArrayList<Piece> pieces, Piece toTake, SoundFile castleSound, SoundFile takeSound, SoundFile moveSound) {
         boolean pinned = isPinned(pieces, targetX, targetY, toTake);
         int absX = abs(x - targetX);

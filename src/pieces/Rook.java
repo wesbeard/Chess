@@ -3,6 +3,7 @@ package pieces;
 import processing.sound.SoundFile;
 
 import java.util.ArrayList;
+import main.Command;
 
 public class Rook extends Piece {
 
@@ -20,7 +21,6 @@ public class Rook extends Piece {
         }
     }
 
-    @Override
     public boolean move(int targetX, int targetY, ArrayList<Piece> pieces, Piece toTake, SoundFile castleSound, SoundFile takeSound, SoundFile moveSound) {
         boolean pinned = isPinned(pieces,targetX, targetY, toTake);
         if ((targetX == x || targetY == y) && !blockedHorizontal(targetX, targetY, pieces, toTake) && !pinned) {

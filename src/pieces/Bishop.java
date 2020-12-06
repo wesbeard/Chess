@@ -4,7 +4,9 @@ import processing.sound.SoundFile;
 
 import java.util.ArrayList;
 
-public class Bishop extends Piece {
+import main.Command;
+
+public class Bishop extends Piece implements Command {
 
     public Bishop (String sideColor, int x, int y) {
         super.side = sideColor;
@@ -20,7 +22,6 @@ public class Bishop extends Piece {
         }
     }
 
-    @Override
     public boolean move(int targetX, int targetY, ArrayList<Piece> pieces, Piece toTake, SoundFile castleSound, SoundFile takeSound, SoundFile moveSound) {
         boolean pinned = isPinned(pieces,targetX, targetY, toTake);
         if ((((targetX - x == targetY - y) || (-targetX + x == targetY - y)) && !blockedDiagonal(targetX, targetY, pieces, toTake)) && !pinned) {

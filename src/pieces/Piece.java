@@ -3,8 +3,9 @@ package pieces;
 import processing.core.*;
 import processing.sound.*;
 import java.util.ArrayList;
+import main.Command;
 
-public abstract class Piece extends PApplet{
+public abstract class Piece extends PApplet implements Command {
 
     public String side;
     public String type;
