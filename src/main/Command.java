@@ -7,6 +7,6 @@ import java.util.ArrayList;
 
 public interface Command {
 
-    boolean move(int targetX, int targetY, ArrayList<Piece> pieces, Piece toTake, SoundFile castleSound, SoundFile takeSound, SoundFile moveSound);
+    boolean move(int targetX, int targetY, ArrayList<Piece> pieces, Piece toTake);
 
 }

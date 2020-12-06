@@ -1,11 +1,12 @@
 package pieces;
 
+import main.Command;
 import processing.sound.SoundFile;
 
 import java.util.ArrayList;
-import main.Command;
+import static main.Constants.*;
 
-public class Pawn extends Piece  {
+public class Pawn extends Piece implements Command {
 
     public Pawn (String sideColor, int x, int y) {
         super.side = sideColor;
@@ -21,7 +22,7 @@ public class Pawn extends Piece  {
         }
     }
 
-    public boolean move(int targetX, int targetY, ArrayList<Piece> pieces, Piece toTake, SoundFile castleSound, SoundFile takeSound, SoundFile moveSound) {
+    public boolean move(int targetX, int targetY, ArrayList<Piece> pieces, Piece toTake) {
         boolean pinned = isPinned(pieces,targetX, targetY, toTake);
         if (targetX == x && !pinned) {
             if(toTake != null){
@@ -31,10 +32,12 @@ public class Pawn extends Piece  {
             }
             if (side == "light") {
                 if(targetY == y - 1 || (targetY == y - 2 && !moved)) {
-                    moveSound.play();
+                    MOVESOUND.play();
                     super.x = targetX;
                     super.y = targetY;
-                    isCheck(pieces, toTake);
+                    if (isCheck(pieces, toTake)) {
+                        CHECKSOUND.play();
+                    }
                     moved = true;
                     if(y == 0) {
                         promote(pieces);
@@ -44,10 +47,12 @@ public class Pawn extends Piece  {
             }
             else {
                 if(targetY == y + 1 || (targetY == y + 2 && !moved)) {
-                    moveSound.play();
+                    MOVESOUND.play();
                     super.x = targetX;
                     super.y = targetY;
-                    isCheck(pieces, toTake);
+                    if (isCheck(pieces, toTake)) {
+                        CHECKSOUND.play();
+                    }
                     moved = true;
                     if(y == 7) {
                         promote(pieces);
@@ -59,10 +64,12 @@ public class Pawn extends Piece  {
         else if ((targetX == x + 1 || targetX == x - 1) && toTake != null && !pinned) {
             if (side == "light") {
                 if (targetY == y - 1) {
-                    takeSound.play();
+                    TAKESOUND.play();
                     super.x = targetX;
                     super.y = targetY;
-                    isCheck(pieces, toTake);
+                    if (isCheck(pieces, toTake)) {
+                        CHECKSOUND.play();
+                    }
                     take(pieces,toTake);
                     moved = true;
                     if(y == 0) {
@@ -73,10 +80,12 @@ public class Pawn extends Piece  {
             }
             else {
                 if (targetY == y + 1) {
-                    takeSound.play();
+                    TAKESOUND.play();
                     super.x = targetX;
                     super.y = targetY;
-                    isCheck(pieces, toTake);
+                    if (isCheck(pieces, toTake)) {
+                        CHECKSOUND.play();
+                    }
                     take(pieces,toTake);
                     moved = true;
                     if(y == 7) {
@@ -87,6 +96,7 @@ public class Pawn extends Piece  {
             }
         }
         System.out.println("Invalid Move P" + convertRank(targetX) + convertFile(targetY));
+        INVALIDSOUND.play();
         return false;
     }
 

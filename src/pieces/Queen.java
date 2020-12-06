@@ -1,11 +1,12 @@
 package pieces;
 
+import main.Command;
 import processing.sound.SoundFile;
 
 import java.util.ArrayList;
-import main.Command;
+import static main.Constants.*;
 
-public class Queen extends Piece {
+public class Queen extends Piece implements Command {
 
     public Queen (String sideColor, int x, int y) {
         super.side = sideColor;
@@ -21,25 +22,28 @@ public class Queen extends Piece {
         }
     }
 
-    public boolean move(int targetX, int targetY, ArrayList<Piece> pieces, Piece toTake, SoundFile castleSound, SoundFile takeSound, SoundFile moveSound) {
+    public boolean move(int targetX, int targetY, ArrayList<Piece> pieces, Piece toTake) {
         boolean pinned = isPinned(pieces,targetX, targetY, toTake);
         if ((((targetX - x == targetY - y || -targetX + x == targetY - y) || (targetX == x || targetY == y)) &&
                 !blockedHorizontal(targetX, targetY, pieces, toTake) && !blockedDiagonal(targetX, targetY, pieces, toTake))
                 && !pinned) {
             if (toTake != null) {
-                takeSound.play();
+                TAKESOUND.play();
             }
             else {
-                moveSound.play();
+                TAKESOUND.play();
             }
             super.x = targetX;
             super.y = targetY;
-            isCheck(pieces, toTake);
+            if (isCheck(pieces, toTake)) {
+                CHECKSOUND.play();
+            }
             take(pieces,toTake);
             moved = true;
             return true;
         }
         System.out.println("Invalid Move Q" + convertRank(targetX) + convertFile(targetY));
+        INVALIDSOUND.play();
         return false;
     }
 

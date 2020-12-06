@@ -28,11 +28,8 @@ public class BoardReplay {
                                      int targetX,
                                      int targetY,
                                      ArrayList<Piece> entireBoard,
-                                     Piece toTake,
-                                     SoundFile castleSound,
-                                     SoundFile takeSound,
-                                     SoundFile moveSound) {
-        boolean successful = pieceToMove.move(targetX, targetY, entireBoard, toTake, castleSound, takeSound, moveSound);
+                                     Piece toTake) {
+        boolean successful = pieceToMove.move(targetX, targetY, entireBoard, toTake);
 
         if(successful) {
             // add all pieces in string format (in a string ArrayList) to the allBoards ArrayList

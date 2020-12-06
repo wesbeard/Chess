@@ -6,6 +6,8 @@ import java.util.ArrayList;
 
 import main.Command;
 
+import static main.Constants.*;
+
 public class Bishop extends Piece implements Command {
 
     public Bishop (String sideColor, int x, int y) {
@@ -22,23 +24,26 @@ public class Bishop extends Piece implements Command {
         }
     }
 
-    public boolean move(int targetX, int targetY, ArrayList<Piece> pieces, Piece toTake, SoundFile castleSound, SoundFile takeSound, SoundFile moveSound) {
+    public boolean move(int targetX, int targetY, ArrayList<Piece> pieces, Piece toTake) {
         boolean pinned = isPinned(pieces,targetX, targetY, toTake);
         if ((((targetX - x == targetY - y) || (-targetX + x == targetY - y)) && !blockedDiagonal(targetX, targetY, pieces, toTake)) && !pinned) {
             if (toTake != null) {
-                takeSound.play();
+                TAKESOUND.play();
             }
             else {
-                moveSound.play();
+                MOVESOUND.play();
             }
             super.x = targetX;
             super.y = targetY;
-            isCheck(pieces, toTake);
+            if (isCheck(pieces, toTake)) {
+                CHECKSOUND.play();
+            }
             take(pieces,toTake);
             moved = true;
             return true;
         }
         System.out.println("Invalid Move B" + convertRank(targetX) + convertFile(targetY));
+        INVALIDSOUND.play();
         return false;
     }
 

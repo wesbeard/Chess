@@ -4,6 +4,7 @@ import processing.sound.SoundFile;
 
 import java.util.ArrayList;
 import main.Command;
+import static main.Constants.*;
 
 public class Knight extends Piece implements Command {
 
@@ -21,26 +22,29 @@ public class Knight extends Piece implements Command {
         }
     }
 
-    public boolean move(int targetX, int targetY, ArrayList<Piece> pieces, Piece toTake, SoundFile castleSound, SoundFile takeSound, SoundFile moveSound) {
+    public boolean move(int targetX, int targetY, ArrayList<Piece> pieces, Piece toTake) {
         boolean pinned = isPinned(pieces, targetX, targetY, toTake);
         int absX = abs(x - targetX);
         int absY = abs(y - targetY);
 
         if(((absX == 2 && absY == 1) || (absX == 1 && absY == 2)) && !pinned) {
             if (toTake != null) {
-                takeSound.play();
+                TAKESOUND.play();
             }
             else {
-                moveSound.play();
+                TAKESOUND.play();
             }
             super.x = targetX;
             super.y = targetY;
-            isCheck(pieces, toTake);
+            if (isCheck(pieces, toTake)) {
+                CHECKSOUND.play();
+            }
             take(pieces, toTake);
             moved = true;
             return true;
         }
         System.out.println("Invalid Move N"  + convertRank(targetX) + convertFile(targetY));
+        INVALIDSOUND.play();
         return false;
     }
 

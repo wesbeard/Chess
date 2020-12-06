@@ -16,7 +16,7 @@ public abstract class Piece extends PApplet implements Command {
     public String pieceSet = "tatiana";
     public boolean moved = false;
 
-    public abstract boolean move(int targetX, int targetY, ArrayList<Piece> pieces, Piece toTake, SoundFile castleSound, SoundFile takeSound, SoundFile moveSound);
+    public abstract boolean move(int targetX, int targetY, ArrayList<Piece> pieces, Piece toTake);
 
     public abstract boolean isCheck(ArrayList<Piece> pieces, Piece toTake);
 

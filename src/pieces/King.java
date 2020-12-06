@@ -5,6 +5,8 @@ import processing.sound.SoundFile;
 import java.util.ArrayList;
 import main.Command;
 
+import static main.Constants.*;
+
 public class King extends Piece implements Command {
 
     public King (String sideColor, int x, int y) {
@@ -21,7 +23,7 @@ public class King extends Piece implements Command {
         }
     }
 
-    public boolean move(int targetX, int targetY, ArrayList<Piece> pieces, Piece toTake, SoundFile castleSound, SoundFile takeSound, SoundFile moveSound) {
+    public boolean move(int targetX, int targetY, ArrayList<Piece> pieces, Piece toTake) {
 
         boolean castled = false;
 
@@ -29,34 +31,36 @@ public class King extends Piece implements Command {
         // If dark and not moved then check which side is being castled and pass ending coordinates
         if (side == "dark" && !moved) {
             if((targetX == 1 && targetY == 0) && !blockedHorizontal(1, 0, pieces, toTake)) {
-                castled = castle(pieces,1, 0, 0, 0, 2, 0, castleSound);
+                castled = castle(pieces,1, 0, 0, 0, 2, 0, CASTLESOUND);
             }
             else if((targetX == 6 && targetY == 0) && !blockedHorizontal(6, 0, pieces, toTake)) {
                 System.out.println("castle test");
-                castled = castle(pieces, 6, 0, 7, 0, 5, 0, castleSound);
+                castled = castle(pieces, 6, 0, 7, 0, 5, 0, CASTLESOUND);
             }
         }
         // If light and not moved then check which side is being castled and pass ending coordinates
         else if (side == "light" && !moved) {
             if((targetX == 1 && targetY == 7) && !blockedHorizontal(1, 7, pieces, toTake)) {
-                castled = castle(pieces, 1, 7, 0, 7, 2, 7, castleSound);
+                castled = castle(pieces, 1, 7, 0, 7, 2, 7, CASTLESOUND);
             }
             else if((targetX == 6 && targetY == 7) && !blockedHorizontal(6, 7, pieces, toTake)) {
-                castled = castle(pieces, 6, 7, 7, 7, 5, 7, castleSound);
+                castled = castle(pieces, 6, 7, 7, 7, 5, 7, CASTLESOUND);
             }
         }
 
         // Normal movement if not attempting castle
         if(((abs(x - targetX) <= 1) && (abs(y - targetY) <= 1)) && !castled && !isPinned(pieces, targetX, targetY, toTake)) {
             if (toTake != null) {
-                takeSound.play();
+                TAKESOUND.play();
             }
             else {
-                moveSound.play();
+                MOVESOUND.play();
             }
             super.x = targetX;
             super.y = targetY;
-            isCheck(pieces, toTake);
+            if (isCheck(pieces, toTake)) {
+                CHECKSOUND.play();
+            }
             take(pieces,toTake);
             moved = true;
             return true;
@@ -69,6 +73,7 @@ public class King extends Piece implements Command {
         // If not and others fail then move is false
         else{
             System.out.println("Invalid Move: K" + convertRank(targetX) + convertFile(targetY));
+            INVALIDSOUND.play();
             return false;
         }
     }
