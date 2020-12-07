@@ -1,10 +1,9 @@
 package pieces;
 
-import processing.sound.SoundFile;
-
 import java.util.ArrayList;
 
-import main.Command;
+import Command.Command;
+import main.Util;
 
 import static main.Constants.*;
 
@@ -24,7 +23,7 @@ public class Bishop extends Piece implements Command {
         }
     }
 
-    public boolean move(int targetX, int targetY, ArrayList<Piece> pieces, Piece toTake) {
+    public boolean move(int targetX, int targetY, ArrayList<Piece> pieces, Piece toTake, ArrayList<Piece> lostPieces) {
         boolean pinned = isPinned(pieces,targetX, targetY, toTake);
         if ((((targetX - x == targetY - y) || (-targetX + x == targetY - y)) && !blockedDiagonal(targetX, targetY, pieces, toTake)) && !pinned) {
             if (toTake != null) {
@@ -38,11 +37,11 @@ public class Bishop extends Piece implements Command {
             if (isCheck(pieces, toTake)) {
                 CHECKSOUND.play();
             }
-            take(pieces,toTake);
+            take(pieces,toTake, lostPieces);
             moved = true;
             return true;
         }
-        System.out.println("Invalid Move B" + convertRank(targetX) + convertFile(targetY));
+        System.out.println("Invalid Move B" + Util.convertRank(targetX) + Util.convertFile(targetY));
         INVALIDSOUND.play();
         return false;
     }

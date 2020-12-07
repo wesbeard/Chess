@@ -1,9 +1,9 @@
 package pieces;
 
 import processing.core.*;
-import processing.sound.*;
+
 import java.util.ArrayList;
-import main.Command;
+import Command.Command;
 
 public abstract class Piece extends PApplet implements Command {
 
@@ -16,7 +16,7 @@ public abstract class Piece extends PApplet implements Command {
     public String pieceSet = "tatiana";
     public boolean moved = false;
 
-    public abstract boolean move(int targetX, int targetY, ArrayList<Piece> pieces, Piece toTake);
+    public abstract boolean move(int targetX, int targetY, ArrayList<Piece> pieces, Piece toTake, ArrayList<Piece> lostPieces);
 
     public abstract boolean isCheck(ArrayList<Piece> pieces, Piece toTake);
 
@@ -54,8 +54,9 @@ public abstract class Piece extends PApplet implements Command {
          return false;
     }
 
-    public boolean take(ArrayList<Piece> pieces, Piece toTake) {
+    public boolean take(ArrayList<Piece> pieces, Piece toTake, ArrayList<Piece> lostPieces) {
         if (toTake != null) {
+            lostPieces.add(toTake);
             pieces.remove(toTake);
             return true;
         }
@@ -195,32 +196,6 @@ public abstract class Piece extends PApplet implements Command {
             }
         }
         return false;
-    }
-
-    public char convertRank(int x) {
-        switch (x) {
-            case 0:
-                return'a';
-            case 1:
-                return'b';
-            case 2:
-                return'c';
-            case 3:
-                return'd';
-            case 4:
-                return'e';
-            case 5:
-                return'f';
-            case 6:
-                return'g';
-            case 7:
-                return'h';
-        }
-        return ' ';
-    }
-
-    public int convertFile(int y) {
-        return y++;
     }
 
     public String getData() {

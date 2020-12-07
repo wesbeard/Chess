@@ -3,7 +3,6 @@ package main;
 import interactivity.Popup;
 import interactivity.iButton;
 import pieces.*;
-import main.Constants.*;
 import java.util.ArrayList;
 
 import static main.Constants.*;
@@ -11,10 +10,11 @@ import static main.Constants.*;
 public class Setup {
 
     public static void addButtons(ArrayList<iButton> buttons) {
-        buttons.add(new iButton(1150, 125, 70, 180, "Resign", "Dark Resigns", DARK, false));
-        buttons.add(new iButton(1150, 875, 70, 180, "Resign", "Light Resigns", LIGHT, false));
+        buttons.add(new iButton(1150, 75, 70, 180, "Resign", "Dark Resigns", DARK, false));
+        buttons.add(new iButton(1150, 925, 70, 180, "Resign", "Light Resigns", LIGHT, false));
         buttons.add(new iButton(1150, 500, 70, 180, "Draw", "Draw", GREY, false));
         buttons.add(new iButton(Popup.buttonX, Popup.buttonY, Popup.buttonHeight, Popup.buttonWidth, Popup.buttonText, Popup.buttonText, DARK, true));
+        //buttons.add(new iButton(1270, 500, 40, 40, ">", "Settings", GREY, false));
     }
 
     public static void setPiecePositions(ArrayList<Piece> pieces) {

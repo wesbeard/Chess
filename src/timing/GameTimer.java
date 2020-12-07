@@ -5,44 +5,6 @@ import java.util.Timer;
 
 public class GameTimer {
 
-    /*
-    public boolean started;
-    public double startTime;
-    public double currentTime;
-    public double pauseTime;
-    public double pauseDuration;
-    public int minutes;
-    public int seconds;
-    public boolean paused = false;
-
-    public void start() {
-        startTime = System.nanoTime();
-    }
-
-    public String getTime() {
-        if (paused) {
-            pauseDuration += System.nanoTime() - pauseTime;
-        }
-        pauseDuration /= 1000000000;
-        currentTime = System.nanoTime() - pauseDuration;
-        currentTime = (currentTime - startTime) / 1000000000;
-
-        seconds = (int)currentTime % 60;
-        minutes = (int)currentTime / 60;
-        return minutes + " : " + seconds;
-    }
-
-    public void pause() {
-        paused = true;
-        pauseTime = currentTime;
-    }
-
-    public void resume() {
-        paused = false;
-    }
-     */
-
-
     public Timer timer = new Timer();
     public boolean started = false;
     public int delay = 0;

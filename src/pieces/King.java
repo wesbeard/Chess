@@ -1,9 +1,10 @@
 package pieces;
 
+import main.Util;
 import processing.sound.SoundFile;
 
 import java.util.ArrayList;
-import main.Command;
+import Command.Command;
 
 import static main.Constants.*;
 
@@ -23,7 +24,7 @@ public class King extends Piece implements Command {
         }
     }
 
-    public boolean move(int targetX, int targetY, ArrayList<Piece> pieces, Piece toTake) {
+    public boolean move(int targetX, int targetY, ArrayList<Piece> pieces, Piece toTake, ArrayList<Piece> lostPieces) {
 
         boolean castled = false;
 
@@ -61,7 +62,7 @@ public class King extends Piece implements Command {
             if (isCheck(pieces, toTake)) {
                 CHECKSOUND.play();
             }
-            take(pieces,toTake);
+            take(pieces,toTake, lostPieces);
             moved = true;
             return true;
         }
@@ -72,7 +73,7 @@ public class King extends Piece implements Command {
         }
         // If not and others fail then move is false
         else{
-            System.out.println("Invalid Move: K" + convertRank(targetX) + convertFile(targetY));
+            System.out.println("Invalid Move: K" + Util.convertRank(targetX) + Util.convertFile(targetY));
             INVALIDSOUND.play();
             return false;
         }

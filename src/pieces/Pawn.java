@@ -1,7 +1,7 @@
 package pieces;
 
-import main.Command;
-import processing.sound.SoundFile;
+import Command.Command;
+import main.Util;
 
 import java.util.ArrayList;
 import static main.Constants.*;
@@ -22,7 +22,7 @@ public class Pawn extends Piece implements Command {
         }
     }
 
-    public boolean move(int targetX, int targetY, ArrayList<Piece> pieces, Piece toTake) {
+    public boolean move(int targetX, int targetY, ArrayList<Piece> pieces, Piece toTake, ArrayList<Piece> lostPieces) {
         boolean pinned = isPinned(pieces,targetX, targetY, toTake);
         if (targetX == x && !pinned) {
             if(toTake != null){
@@ -70,7 +70,7 @@ public class Pawn extends Piece implements Command {
                     if (isCheck(pieces, toTake)) {
                         CHECKSOUND.play();
                     }
-                    take(pieces,toTake);
+                    take(pieces,toTake, lostPieces);
                     moved = true;
                     if(y == 0) {
                         promote(pieces);
@@ -86,7 +86,7 @@ public class Pawn extends Piece implements Command {
                     if (isCheck(pieces, toTake)) {
                         CHECKSOUND.play();
                     }
-                    take(pieces,toTake);
+                    take(pieces,toTake, lostPieces);
                     moved = true;
                     if(y == 7) {
                         promote(pieces);
@@ -95,7 +95,7 @@ public class Pawn extends Piece implements Command {
                 }
             }
         }
-        System.out.println("Invalid Move P" + convertRank(targetX) + convertFile(targetY));
+        System.out.println("Invalid Move P" + Util.convertRank(targetX) + Util.convertFile(targetY));
         INVALIDSOUND.play();
         return false;
     }

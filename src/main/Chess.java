@@ -1,5 +1,6 @@
 package main;
 
+import Command.BoardReplay;
 import interactivity.Popup;
 import interactivity.iButton;
 import pieces.*;
@@ -16,10 +17,11 @@ public class Chess extends PApplet {
     // Board settings
     final int boardSize = 1000;
     final int numSpaces = 8;
-    final int squareSize = boardSize/numSpaces;
+    final int squareSize = boardSize / numSpaces;
 
     // Piece/location variables
     ArrayList<Piece> pieces = new ArrayList<Piece>();
+    ArrayList<Piece> lostPieces = new ArrayList<Piece>();
     Piece selected;
     Piece toTake;
     boolean lightsTurn = true;
@@ -41,15 +43,20 @@ public class Chess extends PApplet {
     int menuWidth = 300;
     ArrayList<iButton> buttons = new ArrayList<iButton>();
     boolean popup = false;
+    int lostLightX = 1010;
+    int lostLightY = 160;
+    int lostDarkX = 1010;
+    int lostDarkY = 670;
+    int numLostDark = 0;
+    int numLostLight = 0;
+    int darkLostRows = 0;
+    int lightLostRows = 0;
 
     // Timer variables
     GameTimer darkTimer = new GameTimer();
     GameTimer lightTimer = new GameTimer();
     String darkTimerValue = "10:00";
     String lightTimerValue = "10:00";
-
-
-
 
     public static void main(String[] args) {
         PApplet.main("main.Chess");
@@ -60,11 +67,11 @@ public class Chess extends PApplet {
     }
 
     public void setup() {
-        // Sounds
+        // Initialize sounds
         MOVESOUND = new SoundFile(this, "sound/Move.mp3");
         MOVESOUND.amp((float) .4);
         TAKESOUND = new SoundFile(this, "sound/Take.mp3");
-        TAKESOUND.amp((float) .6);
+        TAKESOUND.amp((float) .3);
         CASTLESOUND = new SoundFile(this, "sound/Castle.mp3");
         CASTLESOUND.amp((float) .4);
         VICTORYSOUND = new SoundFile(this, "sound/Victory.mp3");
@@ -74,56 +81,34 @@ public class Chess extends PApplet {
         CHECKSOUND = new SoundFile(this, "sound/Check.wav");
         CHECKSOUND.amp((float) .1);
 
-        // Window
+        // Window settings
         icon = loadImage("images/icon.png");
         surface.setIcon(icon);
         cursor(HAND);
         surface.setTitle("Chess!");
         background(LIGHT.getRGB());
 
-        // Game
+        // Game setup
         Setup.setPiecePositions(pieces);
-        replay = new BoardReplay(pieces);
+        replay = new BoardReplay(pieces, lostPieces);
 
-        // UI
+        // UI settings
         textSize(36);
         textAlign(CENTER, CENTER);
         Setup.addButtons(buttons);
     }
 
     public void draw() {
-
-        if (!firstMoveLight && firstMoveDark && !lightTimer.started) {
-            lightTimer.start();
-            lightTimer.started = true;
-        }
-        if (firstMoveDark && !firstMoveLight && !darkTimer.started){
-            darkTimer.start();
-            darkTimer.started = true;
-        }
-        if (lightTimer.started) {
-            lightTimerValue = lightTimer.getTime();
-        }
-        if (darkTimer.started) {
-            darkTimerValue = darkTimer.getTime();
-        }
-        if (darkTimer.isOver) {
-            darkTimer.isOver = false;
-            resetBoard();
-            Popup.text = "White Wins!";
-        }
-        if (lightTimer.isOver) {
-            darkTimer.isOver = false;
-            resetBoard();
-            Popup.text = "Black Wins!";
-        }
-
+        // Functions to be called every frame
         background(BACKGROUND.getRGB());
+        handleTimer();
         drawTurnIndicator();
+        drawLostPieces();
         drawTimers();
         drawBoard();
         drawPieces();
         drawSelection();
+        // If popup is active then draw popup
         if (popup) {
             drawPopup();
         }
@@ -134,14 +119,14 @@ public class Chess extends PApplet {
         ableToSwitch = false;
         if (key == CODED) {
             if (keyCode == LEFT) {
-                ableToSwitch =  replay.stepBack(pieces);
+                ableToSwitch =  replay.stepBack(pieces, lostPieces);
                 // swap turns as you go back in time
                 if (ableToSwitch) {
                     MOVESOUND.play();
                     lightsTurn = !lightsTurn;
                 }
             } else if (keyCode == RIGHT) {
-                ableToSwitch = replay.stepForward(pieces);
+                ableToSwitch = replay.stepForward(pieces, lostPieces);
                 // swap turns as you go back in time
                 if (ableToSwitch) {
                     MOVESOUND.play();
@@ -163,24 +148,7 @@ public class Chess extends PApplet {
         for (iButton button : buttons) {
             if(button.clicked(mouseX, mouseY)){
                 buttonClicked = true;
-                if (button.id == "Light Resigns") {
-                    resetBoard();
-                    Popup.text = "Black Wins!";
-
-
-                }
-                else if (button.id == "Dark Resigns") {
-                    resetBoard();
-                    Popup.text = "White Wins!";
-                }
-                else if (button.id == "Draw") {
-                    resetBoard();
-                    Popup.text = "Draw!";
-                }
-                else if (button.id == "Ok") {
-                    button.hidden = true;
-                    popup = false;
-                }
+                handleButton(button);
             }
         }
 
@@ -217,7 +185,7 @@ public class Chess extends PApplet {
                 // Check if a piece is clicked or a piece is to be taken
                 if (!pieceClicked || toTake != null) {
                     // If move is successful switch sides
-                    if (replay.performRecordCommand(selected, targetX, targetY, pieces, toTake)) {
+                    if (replay.performRecordCommand(selected, targetX, targetY, pieces, toTake, lostPieces)) {
                         selected = null;
                         if (lightsTurn) {
                             if (!firstMoveLight) {
@@ -253,6 +221,7 @@ public class Chess extends PApplet {
     // Calls every frame to draw board
     public void drawBoard() {
 
+        // Draw board squares
         for(int i = 0; i < numSpaces; i++){
             for(int j = 0; j < numSpaces;j++){
 
@@ -266,6 +235,17 @@ public class Chess extends PApplet {
                 else{
                     fillColor = DARK.getRGB();
                 }
+
+                int fileX = 10;
+                int fileY = (j * squareSize) + 100;
+                int file = Util.convertFile(j);
+                text(file,fileX, fileY);
+
+                int rankX = (i * squareSize) + 100;
+                int rankY = 10;
+                char rank = Util.convertRank(i);
+                text(rank, rankX, rankY);
+
             }
             if(numSpaces %2 == 0 && fillColor == DARK.getRGB()){
                 fillColor = LIGHT.getRGB();
@@ -363,8 +343,86 @@ public class Chess extends PApplet {
         lightsTurn = true;
         firstMoveLight = true;
         firstMoveDark = true;
-        replay = new BoardReplay(pieces);
+        replay = new BoardReplay(pieces, lostPieces);
         System.out.println("New game started!");
     }
 
+    public void drawLostPieces() {
+        numLostDark = 0;
+        numLostLight = 0;
+        lightLostRows = 0;
+        darkLostRows = 0;
+        for (Piece piece : lostPieces) {
+            piece.shape = loadShape(piece.shapeFile);
+            if (piece.side == "dark") {
+                numLostDark++;
+                piece.x = lostDarkX + (numLostDark * 37);
+                piece.y = lostDarkY + (darkLostRows * 65);
+
+                shape(piece.shape, piece.x, piece.y, 50, 50);
+                if (numLostDark % 5 == 0) {
+                    darkLostRows++;
+                    numLostDark = 0;
+                }
+            }
+            else {
+                numLostLight++;
+                piece.x = lostLightX + (numLostLight * 37);
+                piece.y = lostLightY + (lightLostRows * 65);
+                shape(piece.shape, piece.x, piece.y, 50, 50);
+                if (numLostLight % 5 == 0) {
+                    lightLostRows++;
+                    numLostLight = 0;
+                }
+            }
+        }
+    }
+
+    public void handleTimer() {
+        if (!firstMoveLight && firstMoveDark && !lightTimer.started) {
+            lightTimer.start();
+            lightTimer.started = true;
+        }
+        if (firstMoveDark && !firstMoveLight && !darkTimer.started){
+            darkTimer.start();
+            darkTimer.started = true;
+        }
+        if (lightTimer.started) {
+            lightTimerValue = lightTimer.getTime();
+        }
+        if (darkTimer.started) {
+            darkTimerValue = darkTimer.getTime();
+        }
+        if (darkTimer.isOver) {
+            darkTimer.isOver = false;
+            resetBoard();
+            Popup.text = "White Wins!";
+        }
+        if (lightTimer.isOver) {
+            darkTimer.isOver = false;
+            resetBoard();
+            Popup.text = "Black Wins!";
+        }
+    }
+
+    public void handleButton(iButton button) {
+        if (button.id == "Light Resigns") {
+            resetBoard();
+            Popup.text = "Black Wins!";
+
+
+        }
+        else if (button.id == "Dark Resigns") {
+            resetBoard();
+            Popup.text = "White Wins!";
+        }
+        else if (button.id == "Draw") {
+            resetBoard();
+            Popup.text = "Draw!";
+        }
+        else if (button.id == "Ok") {
+            button.hidden = true;
+            popup = false;
+        }
+    }
 }

@@ -1,7 +1,7 @@
 package pieces;
 
-import main.Command;
-import processing.sound.SoundFile;
+import Command.Command;
+import main.Util;
 
 import java.util.ArrayList;
 import static main.Constants.*;
@@ -22,7 +22,7 @@ public class Queen extends Piece implements Command {
         }
     }
 
-    public boolean move(int targetX, int targetY, ArrayList<Piece> pieces, Piece toTake) {
+    public boolean move(int targetX, int targetY, ArrayList<Piece> pieces, Piece toTake, ArrayList<Piece> lostPieces) {
         boolean pinned = isPinned(pieces,targetX, targetY, toTake);
         if ((((targetX - x == targetY - y || -targetX + x == targetY - y) || (targetX == x || targetY == y)) &&
                 !blockedHorizontal(targetX, targetY, pieces, toTake) && !blockedDiagonal(targetX, targetY, pieces, toTake))
@@ -31,18 +31,18 @@ public class Queen extends Piece implements Command {
                 TAKESOUND.play();
             }
             else {
-                TAKESOUND.play();
+                MOVESOUND.play();
             }
             super.x = targetX;
             super.y = targetY;
             if (isCheck(pieces, toTake)) {
                 CHECKSOUND.play();
             }
-            take(pieces,toTake);
+            take(pieces,toTake, lostPieces);
             moved = true;
             return true;
         }
-        System.out.println("Invalid Move Q" + convertRank(targetX) + convertFile(targetY));
+        System.out.println("Invalid Move Q" + Util.convertRank(targetX) + Util.convertFile(targetY));
         INVALIDSOUND.play();
         return false;
     }

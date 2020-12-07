@@ -1,25 +1,30 @@
-package main;
+package Command;
 
 import pieces.*;
-import processing.sound.SoundFile;
-
 import java.util.ArrayList;
-import java.util.Collections;
+
 
 public class BoardReplay {
 
     ArrayList<ArrayList<String>> allBoards;
+    ArrayList<ArrayList<String>> allLostPieces;
     int currentPosition;
 
-    public BoardReplay(ArrayList<Piece> entireBoard) {
+    public BoardReplay(ArrayList<Piece> entireBoard, ArrayList<Piece> lostPieces) {
         allBoards = new ArrayList<ArrayList<String>>();
+        allLostPieces = new ArrayList<ArrayList<String>>();
         currentPosition = -1;
 
         // add all pieces in string format (in a string ArrayList) to the allBoards ArrayList
         ArrayList<String> currentBoard = new ArrayList<String>();
+        ArrayList<String> currentLostPieces = new ArrayList<String>();
         for (Piece piece : entireBoard) {
             currentBoard.add(piece.getData());
         }
+        for (Piece piece : lostPieces) {
+            currentLostPieces.add(piece.getData());
+        }
+        allLostPieces.add(currentLostPieces);
         allBoards.add(currentBoard);
         currentPosition += 1;
     }
@@ -28,24 +33,32 @@ public class BoardReplay {
                                      int targetX,
                                      int targetY,
                                      ArrayList<Piece> entireBoard,
-                                     Piece toTake) {
-        boolean successful = pieceToMove.move(targetX, targetY, entireBoard, toTake);
+                                     Piece toTake,
+                                     ArrayList<Piece> lostPieces) {
+
+        boolean successful = pieceToMove.move(targetX, targetY, entireBoard, toTake, lostPieces);
 
         if(successful) {
             // add all pieces in string format (in a string ArrayList) to the allBoards ArrayList
             ArrayList<String> currentBoard = new ArrayList<String>();
+            ArrayList<String> currentLostPieces = new ArrayList<String>();
             for (Piece piece : entireBoard) {
                 currentBoard.add(piece.getData());
+            }
+            for (Piece piece : lostPieces) {
+                currentLostPieces.add(piece.getData());
             }
             // if someone makes a move while looking at the middle of the replay...
             // delete all instances of the board after it
             if (currentPosition != allBoards.size() - 1) {
                 // I have to loop backwards because the size of allBoards changes as I delete elements
                 for (int i = allBoards.size() - 1; i > currentPosition; i--) {
+                    allLostPieces.remove(i);
                     allBoards.remove(i);
                 }
-                System.out.println("Future boards have been removed");
+                System.out.println("Future boards removed");
             }
+            allLostPieces.add(currentLostPieces);
             allBoards.add(currentBoard);
 
             currentPosition += 1;
@@ -54,7 +67,7 @@ public class BoardReplay {
     }
 
     // returns the new board to be shown
-    public boolean stepBack(ArrayList<Piece> passedBoard) {
+    public boolean stepBack(ArrayList<Piece> passedBoard, ArrayList<Piece> lostPieces) {
         boolean valid = false;
 
         if(currentPosition > 0) {
@@ -64,13 +77,17 @@ public class BoardReplay {
 
         ArrayList<Piece> newBoard = new ArrayList<Piece>();
         stringArrayToPieceArray(newBoard, allBoards.get(currentPosition));
-
         passedBoard.clear();
         passedBoard.addAll(newBoard);
+
+        ArrayList<Piece> newLostPieces = new ArrayList<Piece>();
+        stringArrayToPieceArray(newLostPieces, allLostPieces.get(currentPosition));
+        lostPieces.clear();
+        lostPieces.addAll(newLostPieces);
         return valid;
     }
 
-    public boolean stepForward(ArrayList<Piece> passedBoard) {
+    public boolean stepForward(ArrayList<Piece> passedBoard, ArrayList<Piece> lostPieces) {
         boolean valid = false;
 
         if(currentPosition < allBoards.size()-1) {
@@ -80,9 +97,14 @@ public class BoardReplay {
 
         ArrayList<Piece> newBoard = new ArrayList<Piece>();
         stringArrayToPieceArray(newBoard, allBoards.get(currentPosition));
-
         passedBoard.clear();
         passedBoard.addAll(newBoard);
+
+        ArrayList<Piece> newLostPieces = new ArrayList<Piece>();
+        stringArrayToPieceArray(newLostPieces, allLostPieces.get(currentPosition));
+        lostPieces.clear();
+        lostPieces.addAll(newLostPieces);
+
         return valid;
     }
 
