@@ -7,12 +7,15 @@ import pieces.*;
 import processing.core.*;
 import processing.sound.*;
 
+import java.io.File;
 import java.util.ArrayList;
 import timing.GameTimer;
 
 import static main.Constants.*;
 
 import LoadFiles.*;
+
+import javax.swing.*;
 
 
 public class Chess extends PApplet {
@@ -141,16 +144,30 @@ public class Chess extends PApplet {
             }
             // temp ====================================================================================================
             else if (keyCode == DOWN) {
-                popup = true;
-                showPopupButton();
-                Popup.text = "Replay started";
 
-                resetBoard();
+                //JFileChooser fileChooser = new JFileChooser();
+                //fileChooser.setCurrentDirectory(new File(System.getProperty("user.home")));
+                //int result = fileChooser.showOpenDialog(fileChooser);
+                JFileChooser fc = new JFileChooser();
+                fc.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
 
-                Context context = new Context(new LoadFEN());
-                ArrayList<ArrayList<String>> boardReplay = new ArrayList<ArrayList<String>>();
-                boardReplay = context.executeLoadStrategy("Replay Files/magnus-hikaru.fen");
-                replay.addBoardReplay(boardReplay);
+                int returnVal = fc.showOpenDialog(fc);
+
+                if (returnVal == JFileChooser.APPROVE_OPTION) {
+                    File selectedFile = fc.getSelectedFile();
+                    System.out.println("Selected file: " + selectedFile.getAbsolutePath());
+
+                    popup = true;
+                    showPopupButton();
+                    Popup.text = "Replay started";
+
+                    resetBoard();
+
+                    Context context = new Context(new LoadFEN());
+                    ArrayList<ArrayList<String>> boardReplay;
+                    boardReplay = context.executeLoadStrategy(selectedFile.getAbsolutePath());
+                    replay.addBoardReplay(boardReplay);
+                }
             }
             // temp ====================================================================================================
         }

@@ -143,20 +143,6 @@ public class BoardReplay {
         allBoards.clear();
         allBoards.addAll(entireGame);
 
-        for (ArrayList<String> arrList : entireGame) {
-            for (String board : arrList) {
-                System.out.println(board);
-            }
-            System.out.println(" ");
-        }
-
-        for (ArrayList<String> arrList : allBoards) {
-            for (String board : arrList) {
-                System.out.println(board);
-            }
-            System.out.println(" ");
-        }
-
         currentPosition = 0;
     }
 }
