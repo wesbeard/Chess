@@ -128,6 +128,7 @@ public class Chess extends PApplet {
     public void keyPressed() {
         ableToSwitch = false;
         if (key == CODED) {
+            // step backward
             if (keyCode == LEFT) {
                 ableToSwitch = replay.stepBack(pieces, lostPieces);
                 // swap turns as you go back in time
@@ -136,6 +137,7 @@ public class Chess extends PApplet {
                     MOVESOUND.play();
                     lightsTurn = !lightsTurn;
                 }
+            // step forward
             } else if (keyCode == RIGHT) {
                 ableToSwitch = replay.stepForward(pieces, lostPieces);
                 // swap turns as you go back in time
@@ -145,13 +147,15 @@ public class Chess extends PApplet {
                     lightsTurn = !lightsTurn;
                 }
             }
-            // temp ====================================================================================================
+            // load file
             else if (keyCode == DOWN) {
-
                 //JFileChooser fileChooser = new JFileChooser();
                 //fileChooser.setCurrentDirectory(new File(System.getProperty("user.home")));
                 //int result = fileChooser.showOpenDialog(fileChooser);
                 JFileChooser fc = new JFileChooser();
+                // open the current directory by default
+                // use user.home to open the home directory
+                fc.setCurrentDirectory(new File(System.getProperty("user.dir")));
                 fc.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
 
                 int returnVal = fc.showOpenDialog(fc);
@@ -172,7 +176,6 @@ public class Chess extends PApplet {
                     replay.addBoardReplay(boardReplay);
                 }
             }
-            // temp ====================================================================================================
         }
     }
 
