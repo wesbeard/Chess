@@ -1,10 +1,20 @@
+/*
+ * Wes Beard - wesley.beard@mymail.champlain.edu
+ * Michael Leonard - michael.leonard@mymail.chamamplain.edu
+ * CSI-340 Final Project
+ * 12/7/2020
+ *
+ * Written by Wes Beard
+ *
+ * This file contains the code specific to the bishop pieces,
+ * including the unique movement and checking procedures
+ */
+
 package pieces;
 
 import java.util.ArrayList;
-
 import Command.Command;
 import main.Util;
-
 import static main.Constants.*;
 
 public class Bishop extends Piece implements Command {

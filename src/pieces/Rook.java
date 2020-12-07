@@ -1,8 +1,19 @@
+/*
+ * Wes Beard - wesley.beard@mymail.champlain.edu
+ * Michael Leonard - michael.leonard@mymail.chamamplain.edu
+ * CSI-340 Final Project
+ * 12/7/2020
+ *
+ * Written by Wes Beard
+ *
+ * This file contains the code specific to the rook pieces,
+ * including the unique movement and checking procedures
+ */
+
 package pieces;
 
 import Command.Command;
 import main.Util;
-
 import java.util.ArrayList;
 import static main.Constants.*;
 

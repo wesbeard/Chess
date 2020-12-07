@@ -1,3 +1,15 @@
+/*
+ * Wes Beard - wesley.beard@mymail.champlain.edu
+ * Michael Leonard - michael.leonard@mymail.chamamplain.edu
+ * CSI-340 Final Project
+ * 12/7/2020
+ *
+ * Written by Wes Beard
+ *
+ * This file contains some various utility functions used
+ * throughout the program
+ */
+
 package main;
 
 public class Util {

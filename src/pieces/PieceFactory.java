@@ -1,3 +1,16 @@
+/*
+ * Wes Beard - wesley.beard@mymail.champlain.edu
+ * Michael Leonard - michael.leonard@mymail.chamamplain.edu
+ * CSI-340 Final Project
+ * 12/7/2020
+ *
+ * Written by Wes Beard
+ *
+ * This file contains the piece factory code which constructs
+ * pieces based on given data which allows it to create every
+ * different type of piece in one class
+ */
+
 package pieces;
 
 public class PieceFactory {

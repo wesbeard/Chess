@@ -1,3 +1,14 @@
+/*
+ * Wes Beard - wesley.beard@mymail.champlain.edu
+ * Michael Leonard - michael.leonard@mymail.chamamplain.edu
+ * CSI-340 Final Project
+ * 12/7/2020
+ *
+ * Written by Wes Beard
+ *
+ * This file stores all of the relevant information for the popup box
+ */
+
 package interactivity;
 
 public class Popup {

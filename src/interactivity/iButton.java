@@ -1,3 +1,16 @@
+/*
+ * Wes Beard - wesley.beard@mymail.champlain.edu
+ * Michael Leonard - michael.leonard@mymail.chamamplain.edu
+ * CSI-340 Final Project
+ * 12/7/2020
+ *
+ * Written by Wes Beard
+ *
+ * This file represents an interactive button, storing its
+ * dimensions, text, appearance, etc as well as to check
+ * if the button had been clicked by the user
+ */
+
 package interactivity;
 
 import java.awt.*;

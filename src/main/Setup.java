@@ -1,3 +1,17 @@
+/*
+ * Wes Beard - wesley.beard@mymail.champlain.edu
+ * Michael Leonard - michael.leonard@mymail.chamamplain.edu
+ * CSI-340 Final Project
+ * 12/7/2020
+ *
+ * Written by Wes Beard
+ *
+ * This file contains some various setup code including functions
+ * to set the initial positions of all pieces as well as add
+ * all of the buttons to the button list
+ */
+
+
 package main;
 
 import interactivity.Popup;
