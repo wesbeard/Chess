@@ -149,7 +149,7 @@ public class Chess extends PApplet {
 
                 Context context = new Context(new LoadFEN());
                 ArrayList<ArrayList<String>> boardReplay = new ArrayList<ArrayList<String>>();
-                boardReplay = context.executeLoadStrategy("C:\\Users\\Michael\\Desktop\\Michael and dylan.fen");
+                boardReplay = context.executeLoadStrategy("Replay Files/magnus-hikaru.fen");
                 replay.addBoardReplay(boardReplay);
             }
             // temp ====================================================================================================
