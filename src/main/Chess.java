@@ -8,6 +8,8 @@ import processing.core.*;
 import processing.sound.*;
 
 import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import timing.GameTimer;
 
@@ -146,8 +148,26 @@ public class Chess extends PApplet {
                     lightsTurn = !lightsTurn;
                 }
             }
-            // load file
+            // download file
             else if (keyCode == DOWN) {
+                ArrayList<ArrayList<String>> boardReplay = replay.getBoardReplay();
+                try {
+                    FileWriter fileWriter = new FileWriter("filename.chess");
+                    for (ArrayList<String> board : boardReplay) {
+                        for (String piece : board) {
+                            fileWriter.write(piece + " ");
+                        }
+                        fileWriter.write("\n");
+                    }
+                    fileWriter.close();
+                    System.out.println("Successfully wrote to a file.");
+                } catch (IOException e) {
+                    System.out.println("An error occurred while trying to download the file.");
+                    e.printStackTrace();
+                }
+            }
+            // load file
+            else if (keyCode == UP) {
                 //JFileChooser fileChooser = new JFileChooser();
                 //fileChooser.setCurrentDirectory(new File(System.getProperty("user.home")));
                 //int result = fileChooser.showOpenDialog(fileChooser);

@@ -150,4 +150,8 @@ public class BoardReplay {
 
         currentPosition = 0;
     }
+
+    public ArrayList<ArrayList<String>> getBoardReplay() {
+        return allBoards;
+    }
 }
