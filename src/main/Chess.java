@@ -1,3 +1,15 @@
+/*
+ * Wes Beard - wesley.beard@mymail.champlain.edu
+ * Michael Leonard - michael.leonard@mymail.chamamplain.edu
+ * CSI-340 Final Project
+ * 12/7/2020
+ *
+ * Written by Wes Beard & Michael Leonard
+ *
+ * This file contains the chess PApplet and all associated
+ * functions such as those related to drawing and interactivity
+ */
+
 package main;
 
 import Command.BoardReplay;
@@ -6,15 +18,11 @@ import interactivity.iButton;
 import pieces.*;
 import processing.core.*;
 import processing.sound.*;
-
 import java.io.File;
 import java.util.ArrayList;
 import timing.GameTimer;
-
 import static main.Constants.*;
-
 import LoadFiles.*;
-
 import javax.swing.*;
 
 
@@ -49,14 +57,7 @@ public class Chess extends PApplet {
     int menuWidth = 300;
     ArrayList<iButton> buttons = new ArrayList<iButton>();
     boolean popup = false;
-    int lostLightX = 1010;
-    int lostLightY = 160;
-    int lostDarkX = 1010;
-    int lostDarkY = 670;
-    int numLostDark = 0;
-    int numLostLight = 0;
-    int darkLostRows = 0;
-    int lightLostRows = 0;
+
 
     // Timer variables
     GameTimer darkTimer = new GameTimer();

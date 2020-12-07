@@ -1,7 +1,20 @@
+/*
+ * Wes Beard - wesley.beard@mymail.champlain.edu
+ * Michael Leonard - michael.leonard@mymail.chamamplain.edu
+ * CSI-340 Final Project
+ * 12/7/2020
+ *
+ * Written by Wes Beard
+ *
+ * This file contains the piece code for functionality
+ * shared by every piece type such as checking pinned,
+ * checking the king, taking a piece, and other various
+ * common code which cuts down on code duplication
+ */
+
 package pieces;
 
 import processing.core.*;
-
 import java.util.ArrayList;
 import Command.Command;
 

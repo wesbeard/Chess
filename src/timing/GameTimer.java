@@ -1,3 +1,15 @@
+/*
+ * Wes Beard - wesley.beard@mymail.champlain.edu
+ * Michael Leonard - michael.leonard@mymail.chamamplain.edu
+ * CSI-340 Final Project
+ * 12/7/2020
+ *
+ * Written by Wes Beard & Michael Leonard
+ *
+ * This file contains the timer functionality that keeps
+ * track of the current time remaining for each player
+ */
+
 package timing;
 
 import java.util.TimerTask;

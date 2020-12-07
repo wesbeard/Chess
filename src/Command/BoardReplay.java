@@ -1,3 +1,16 @@
+/*
+ * Wes Beard - wesley.beard@mymail.champlain.edu
+ * Michael Leonard - michael.leonard@mymail.chamamplain.edu
+ * CSI-340 Final Project
+ * 12/7/2020
+ *
+ * Written by Michael Leonard
+ *
+ * This file contains game replay functionality which saves each
+ * board state as a string that can be reloaded when stepping
+ * back or forward through a loaded or currently played game
+ */
+
 package Command;
 
 import pieces.*;
@@ -27,15 +40,6 @@ public class BoardReplay {
         }
         allLostPieces.add(currentLostPieces);
         allBoards.add(currentBoard);
-
-        if (!fileReplayStarted) {
-            for (ArrayList<String> arrList : allBoards) {
-                for (String board : arrList) {
-                    System.out.println(board);
-                }
-                System.out.println(" ");
-            }
-        }
 
         currentPosition += 1;
     }

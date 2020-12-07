@@ -1,3 +1,15 @@
+/*
+ * Wes Beard - wesley.beard@mymail.champlain.edu
+ * Michael Leonard - michael.leonard@mymail.chamamplain.edu
+ * CSI-340 Final Project
+ * 12/7/2020
+ *
+ * Written by Michael Leonard
+ *
+ * This file is the command interface that connects piece
+ * movement to game replay
+ */
+
 package Command;
 
 import pieces.Piece;

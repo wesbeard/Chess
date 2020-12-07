@@ -1,11 +1,22 @@
+/*
+ * Wes Beard - wesley.beard@mymail.champlain.edu
+ * Michael Leonard - michael.leonard@mymail.chamamplain.edu
+ * CSI-340 Final Project
+ * 12/7/2020
+ *
+ * Written by Wes Beard
+ *
+ * This file contains the code specific to the king pieces,
+ * including the unique movement, checking, and castling procedures
+ */
+
+
 package pieces;
 
 import main.Util;
 import processing.sound.SoundFile;
-
 import java.util.ArrayList;
 import Command.Command;
-
 import static main.Constants.*;
 
 public class King extends Piece implements Command {
