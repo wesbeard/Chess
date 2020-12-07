@@ -35,7 +35,6 @@ public class King extends Piece implements Command {
                 castled = castle(pieces,1, 0, 0, 0, 2, 0, CASTLESOUND);
             }
             else if((targetX == 6 && targetY == 0) && !blockedHorizontal(6, 0, pieces, toTake)) {
-                System.out.println("castle test");
                 castled = castle(pieces, 6, 0, 7, 0, 5, 0, CASTLESOUND);
             }
         }

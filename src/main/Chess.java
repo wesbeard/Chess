@@ -11,6 +11,8 @@ import timing.GameTimer;
 
 import static main.Constants.*;
 
+import LoadFiles.*;
+
 
 public class Chess extends PApplet {
 
@@ -119,7 +121,7 @@ public class Chess extends PApplet {
         ableToSwitch = false;
         if (key == CODED) {
             if (keyCode == LEFT) {
-                ableToSwitch =  replay.stepBack(pieces, lostPieces);
+                ableToSwitch = replay.stepBack(pieces, lostPieces);
                 // swap turns as you go back in time
                 if (ableToSwitch) {
                     MOVESOUND.play();
@@ -133,6 +135,18 @@ public class Chess extends PApplet {
                     lightsTurn = !lightsTurn;
                 }
             }
+            // temp ====================================================================================================
+            else if (keyCode == DOWN) {
+                popup = true;
+                showPopupButton();
+                Popup.text = "Replay started";
+
+                Context context = new Context(new LoadFEN());
+                ArrayList<ArrayList<String>> boardReplay = new ArrayList<ArrayList<String>>();
+                boardReplay = context.executeLoadStrategy("C:\\Users\\Michael\\Desktop\\Michael and dylan.fen");
+                replay.addBoardReplay(boardReplay);
+            }
+            // temp ====================================================================================================
         }
     }
 
@@ -409,8 +423,6 @@ public class Chess extends PApplet {
         if (button.id == "Light Resigns") {
             resetBoard();
             Popup.text = "Black Wins!";
-
-
         }
         else if (button.id == "Dark Resigns") {
             resetBoard();
