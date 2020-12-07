@@ -157,6 +157,6 @@ public class BoardReplay {
             System.out.println(" ");
         }
 
-        currentPosition = -1;
+        currentPosition = 0;
     }
 }

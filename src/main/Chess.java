@@ -141,6 +141,8 @@ public class Chess extends PApplet {
                 showPopupButton();
                 Popup.text = "Replay started";
 
+                resetBoard();
+
                 Context context = new Context(new LoadFEN());
                 ArrayList<ArrayList<String>> boardReplay = new ArrayList<ArrayList<String>>();
                 boardReplay = context.executeLoadStrategy("C:\\Users\\Michael\\Desktop\\Michael and dylan.fen");
