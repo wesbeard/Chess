@@ -28,15 +28,6 @@ public class BoardReplay {
         allLostPieces.add(currentLostPieces);
         allBoards.add(currentBoard);
 
-        if (!fileReplayStarted) {
-            for (ArrayList<String> arrList : allBoards) {
-                for (String board : arrList) {
-                    System.out.println(board);
-                }
-                System.out.println(" ");
-            }
-        }
-
         currentPosition += 1;
     }
 
