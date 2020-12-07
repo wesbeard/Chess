@@ -110,7 +110,9 @@ public class Chess extends PApplet {
         background(BACKGROUND.getRGB());
         handleTimer();
         drawTurnIndicator();
-        drawLostPieces();
+        if (!BoardReplay.fileReplayStarted) {
+            drawLostPieces();
+        }
         drawTimers();
         drawBoard();
         drawPieces();
@@ -446,14 +448,17 @@ public class Chess extends PApplet {
     public void handleButton(iButton button) {
 
         if (button.id == "Light Resigns") {
+            BoardReplay.fileReplayStarted = false;
             resetBoard();
             Popup.text = "Black Wins!";
         }
         else if (button.id == "Dark Resigns") {
+            BoardReplay.fileReplayStarted = false;
             resetBoard();
             Popup.text = "White Wins!";
         }
         else if (button.id == "Draw") {
+            BoardReplay.fileReplayStarted = false;
             resetBoard();
             Popup.text = "Draw!";
         }

@@ -9,6 +9,7 @@ public class BoardReplay {
     ArrayList<ArrayList<String>> allBoards;
     ArrayList<ArrayList<String>> allLostPieces;
     int currentPosition;
+    public static boolean fileReplayStarted = false;
 
     public BoardReplay(ArrayList<Piece> entireBoard, ArrayList<Piece> lostPieces) {
         allBoards = new ArrayList<ArrayList<String>>();
@@ -27,12 +28,14 @@ public class BoardReplay {
         allLostPieces.add(currentLostPieces);
         allBoards.add(currentBoard);
 
-        /*for (ArrayList<String> arrList : allBoards) {
-            for (String board : arrList) {
-                System.out.println(board);
+        if (!fileReplayStarted) {
+            for (ArrayList<String> arrList : allBoards) {
+                for (String board : arrList) {
+                    System.out.println(board);
+                }
+                System.out.println(" ");
             }
-            System.out.println(" ");
-        }*/
+        }
 
         currentPosition += 1;
     }
@@ -49,24 +52,30 @@ public class BoardReplay {
         if(successful) {
             // add all pieces in string format (in a string ArrayList) to the allBoards ArrayList
             ArrayList<String> currentBoard = new ArrayList<String>();
-            //ArrayList<String> currentLostPieces = new ArrayList<String>();         TODO 6 lines of lost pieces should be uncommented
+            ArrayList<String> currentLostPieces = new ArrayList<String>();
             for (Piece piece : entireBoard) {
                 currentBoard.add(piece.getData());
             }
-            //for (Piece piece : lostPieces) {
-            //    currentLostPieces.add(piece.getData());
-            //}
+            if (!fileReplayStarted) {
+                for (Piece piece : lostPieces) {
+                    currentLostPieces.add(piece.getData());
+                }
+            }
             // if someone makes a move while looking at the middle of the replay...
             // delete all instances of the board after it
             if (currentPosition != allBoards.size() - 1) {
                 // I have to loop backwards because the size of allBoards changes as I delete elements
                 for (int i = allBoards.size() - 1; i > currentPosition; i--) {
-                    //allLostPieces.remove(i);
+                    if (!fileReplayStarted) {
+                        allLostPieces.remove(i);
+                    }
                     allBoards.remove(i);
                 }
                 System.out.println("Future boards removed");
             }
-            //allLostPieces.add(currentLostPieces);
+            if (!fileReplayStarted) {
+                allLostPieces.add(currentLostPieces);
+            }
             allBoards.add(currentBoard);
 
             currentPosition += 1;
@@ -87,11 +96,12 @@ public class BoardReplay {
         stringArrayToPieceArray(newBoard, allBoards.get(currentPosition));
         passedBoard.clear();
         passedBoard.addAll(newBoard);
-
-        /*ArrayList<Piece> newLostPieces = new ArrayList<Piece>();
-        stringArrayToPieceArray(newLostPieces, allLostPieces.get(currentPosition));
-        lostPieces.clear();
-        lostPieces.addAll(newLostPieces);*/
+        if (!fileReplayStarted) {
+            ArrayList<Piece> newLostPieces = new ArrayList<Piece>();
+            stringArrayToPieceArray(newLostPieces, allLostPieces.get(currentPosition));
+            lostPieces.clear();
+            lostPieces.addAll(newLostPieces);
+        }
         return valid;
     }
 
@@ -108,10 +118,14 @@ public class BoardReplay {
         passedBoard.clear();
         passedBoard.addAll(newBoard);
 
-        /*ArrayList<Piece> newLostPieces = new ArrayList<Piece>();
-        stringArrayToPieceArray(newLostPieces, allLostPieces.get(currentPosition));
-        lostPieces.clear();
-        lostPieces.addAll(newLostPieces);*/
+        if (!fileReplayStarted) {
+            ArrayList<Piece> newLostPieces = new ArrayList<Piece>();
+            if (!fileReplayStarted) {
+                stringArrayToPieceArray(newLostPieces, allLostPieces.get(currentPosition));
+                lostPieces.clear();
+                lostPieces.addAll(newLostPieces);
+            }
+        }
 
         return valid;
     }

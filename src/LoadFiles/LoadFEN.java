@@ -1,5 +1,7 @@
 package LoadFiles;
 
+import Command.BoardReplay;
+
 import java.io.*;
 
 import java.util.ArrayList;
@@ -9,6 +11,7 @@ public class LoadFEN implements LoadStrategy {
     public ArrayList<ArrayList<String>> loadGame(String fileLocation) {
         // pass the path to the file as a parameter
 
+        BoardReplay.fileReplayStarted = true;
         ArrayList<ArrayList<String>> entireGame = new ArrayList<ArrayList<String>>();
 
         // read all data from file
