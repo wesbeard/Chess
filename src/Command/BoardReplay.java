@@ -26,6 +26,14 @@ public class BoardReplay {
         }
         allLostPieces.add(currentLostPieces);
         allBoards.add(currentBoard);
+
+        /*for (ArrayList<String> arrList : allBoards) {
+            for (String board : arrList) {
+                System.out.println(board);
+            }
+            System.out.println(" ");
+        }*/
+
         currentPosition += 1;
     }
 
@@ -41,24 +49,24 @@ public class BoardReplay {
         if(successful) {
             // add all pieces in string format (in a string ArrayList) to the allBoards ArrayList
             ArrayList<String> currentBoard = new ArrayList<String>();
-            ArrayList<String> currentLostPieces = new ArrayList<String>();
+            //ArrayList<String> currentLostPieces = new ArrayList<String>();         TODO 6 lines of lost pieces should be uncommented
             for (Piece piece : entireBoard) {
                 currentBoard.add(piece.getData());
             }
-            for (Piece piece : lostPieces) {
-                currentLostPieces.add(piece.getData());
-            }
+            //for (Piece piece : lostPieces) {
+            //    currentLostPieces.add(piece.getData());
+            //}
             // if someone makes a move while looking at the middle of the replay...
             // delete all instances of the board after it
             if (currentPosition != allBoards.size() - 1) {
                 // I have to loop backwards because the size of allBoards changes as I delete elements
                 for (int i = allBoards.size() - 1; i > currentPosition; i--) {
-                    allLostPieces.remove(i);
+                    //allLostPieces.remove(i);
                     allBoards.remove(i);
                 }
                 System.out.println("Future boards removed");
             }
-            allLostPieces.add(currentLostPieces);
+            //allLostPieces.add(currentLostPieces);
             allBoards.add(currentBoard);
 
             currentPosition += 1;
@@ -80,10 +88,10 @@ public class BoardReplay {
         passedBoard.clear();
         passedBoard.addAll(newBoard);
 
-        ArrayList<Piece> newLostPieces = new ArrayList<Piece>();
+        /*ArrayList<Piece> newLostPieces = new ArrayList<Piece>();
         stringArrayToPieceArray(newLostPieces, allLostPieces.get(currentPosition));
         lostPieces.clear();
-        lostPieces.addAll(newLostPieces);
+        lostPieces.addAll(newLostPieces);*/
         return valid;
     }
 
@@ -100,10 +108,10 @@ public class BoardReplay {
         passedBoard.clear();
         passedBoard.addAll(newBoard);
 
-        ArrayList<Piece> newLostPieces = new ArrayList<Piece>();
+        /*ArrayList<Piece> newLostPieces = new ArrayList<Piece>();
         stringArrayToPieceArray(newLostPieces, allLostPieces.get(currentPosition));
         lostPieces.clear();
-        lostPieces.addAll(newLostPieces);
+        lostPieces.addAll(newLostPieces);*/
 
         return valid;
     }
@@ -129,5 +137,26 @@ public class BoardReplay {
             );
             pieceArr.add(pieceToAdd);
         }
+    }
+
+    public void addBoardReplay(ArrayList<ArrayList<String>> entireGame) {
+        allBoards.clear();
+        allBoards.addAll(entireGame);
+
+        for (ArrayList<String> arrList : entireGame) {
+            for (String board : arrList) {
+                System.out.println(board);
+            }
+            System.out.println(" ");
+        }
+
+        for (ArrayList<String> arrList : allBoards) {
+            for (String board : arrList) {
+                System.out.println(board);
+            }
+            System.out.println(" ");
+        }
+
+        currentPosition = 0;
     }
 }
