@@ -6,6 +6,7 @@ import interactivity.iButton;
 import pieces.*;
 import processing.core.*;
 import processing.sound.*;
+
 import java.util.ArrayList;
 import timing.GameTimer;
 
@@ -67,6 +68,7 @@ public class Chess extends PApplet {
     }
 
     public void setup() {
+
         // Initialize sounds
         MOVESOUND = new SoundFile(this, "sound/Move.mp3");
         MOVESOUND.amp((float) .4);
@@ -122,6 +124,7 @@ public class Chess extends PApplet {
                 ableToSwitch =  replay.stepBack(pieces, lostPieces);
                 // swap turns as you go back in time
                 if (ableToSwitch) {
+                    selected = null;
                     MOVESOUND.play();
                     lightsTurn = !lightsTurn;
                 }
@@ -129,6 +132,7 @@ public class Chess extends PApplet {
                 ableToSwitch = replay.stepForward(pieces, lostPieces);
                 // swap turns as you go back in time
                 if (ableToSwitch) {
+                    selected = null;
                     MOVESOUND.play();
                     lightsTurn = !lightsTurn;
                 }
@@ -339,6 +343,7 @@ public class Chess extends PApplet {
         lightTimer.reset();
         darkTimer.reset();
         pieces.clear();
+        lostPieces.clear();
         Setup.setPiecePositions(pieces);
         lightsTurn = true;
         firstMoveLight = true;
@@ -406,11 +411,10 @@ public class Chess extends PApplet {
     }
 
     public void handleButton(iButton button) {
+
         if (button.id == "Light Resigns") {
             resetBoard();
             Popup.text = "Black Wins!";
-
-
         }
         else if (button.id == "Dark Resigns") {
             resetBoard();

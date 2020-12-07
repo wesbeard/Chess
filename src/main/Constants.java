@@ -12,7 +12,7 @@ public final class Constants {
     public static Color LIGHT = new Color(255, 255, 221);
     public static Color DARK = new Color(104, 136, 72);
     public static Color HIGHLIGHT = new Color(200, 100, 100);
-    public static Color BACKGROUND = new Color(255, 255, 255);
+    public static Color BACKGROUND = new Color(90, 90, 90);
     public static Color BUTTONEDGE = new Color(0, 0, 0);
     public static Color GREY = new Color (150, 150, 150);
 

@@ -14,7 +14,6 @@ public class Setup {
         buttons.add(new iButton(1150, 925, 70, 180, "Resign", "Light Resigns", LIGHT, false));
         buttons.add(new iButton(1150, 500, 70, 180, "Draw", "Draw", GREY, false));
         buttons.add(new iButton(Popup.buttonX, Popup.buttonY, Popup.buttonHeight, Popup.buttonWidth, Popup.buttonText, Popup.buttonText, DARK, true));
-        //buttons.add(new iButton(1270, 500, 40, 40, ">", "Settings", GREY, false));
     }
 
     public static void setPiecePositions(ArrayList<Piece> pieces) {
