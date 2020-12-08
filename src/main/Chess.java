@@ -23,7 +23,6 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.lang.*;
-
 import timing.GameTimer;
 import static main.Constants.*;
 import LoadFiles.*;
@@ -178,9 +177,6 @@ public class Chess extends PApplet {
             }
             // load file
             else if (keyCode == UP) {
-                //JFileChooser fileChooser = new JFileChooser();
-                //fileChooser.setCurrentDirectory(new File(System.getProperty("user.home")));
-                //int result = fileChooser.showOpenDialog(fileChooser);
                 JFileChooser fc = new JFileChooser();
                 // open the current directory by default
                 // use user.home to open the home directory
@@ -204,7 +200,6 @@ public class Chess extends PApplet {
                     // ex. michael.leonard.chess
                     //                    ^
                     String fileType = selectedFile.getAbsolutePath().split("\\.")[selectedFile.getAbsolutePath().split("\\.").length-1];
-                    System.out.println(fileType);
                     if(fileType.equals("fen")) {
                         context = new Context(new LoadFEN());
                     }
