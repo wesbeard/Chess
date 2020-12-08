@@ -22,6 +22,8 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.lang.*;
+
 import timing.GameTimer;
 import static main.Constants.*;
 import LoadFiles.*;
@@ -153,7 +155,9 @@ public class Chess extends PApplet {
             else if (keyCode == DOWN) {
                 ArrayList<ArrayList<String>> boardReplay = replay.getBoardReplay();
                 try {
-                    FileWriter fileWriter = new FileWriter("filename.chess");
+                    String filename;
+                    filename = System.currentTimeMillis() + ".chess";
+                    FileWriter fileWriter = new FileWriter(filename);
                     for (ArrayList<String> board : boardReplay) {
                         for (String piece : board) {
                             fileWriter.write(piece + " ");
@@ -161,7 +165,12 @@ public class Chess extends PApplet {
                         fileWriter.write("\n");
                     }
                     fileWriter.close();
-                    System.out.println("Successfully wrote to a file.");
+                    System.out.println("Successfully downloaded the game to file " + filename);
+
+                    popup = true;
+                    showPopupButton();
+                    Popup.text = "File downloaded";
+
                 } catch (IOException e) {
                     System.out.println("An error occurred while trying to download the file.");
                     e.printStackTrace();
@@ -190,7 +199,18 @@ public class Chess extends PApplet {
 
                     resetBoard();
 
-                    Context context = new Context(new LoadFEN());
+                    Context context = null;
+                    // last element of splitting by .
+                    // ex. michael.leonard.chess
+                    //                    ^
+                    String fileType = selectedFile.getAbsolutePath().split("\\.")[selectedFile.getAbsolutePath().split("\\.").length-1];
+                    System.out.println(fileType);
+                    if(fileType.equals("fen")) {
+                        context = new Context(new LoadFEN());
+                    }
+                    if(fileType.equals("chess")) {
+                        context = new Context(new LoadCustomCHESS());
+                    }
                     ArrayList<ArrayList<String>> boardReplay;
                     boardReplay = context.executeLoadStrategy(selectedFile.getAbsolutePath());
                     replay.addBoardReplay(boardReplay);
