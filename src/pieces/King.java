@@ -91,11 +91,6 @@ public class King extends Piece implements Command {
 
     @Override
     public boolean isCheck(ArrayList<Piece> pieces, Piece toTake) {
-        Piece enemyKing = getKing(pieces, side);
-        if(((abs(x - enemyKing.x) <= 1) && (abs(y - enemyKing.y) <= 1))) {
-            System.out.println("Check by " + side + " king!");
-            return true;
-        }
         return false;
     }
 

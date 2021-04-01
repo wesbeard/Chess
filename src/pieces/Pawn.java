@@ -34,15 +34,35 @@ public class Pawn extends Piece implements Command {
     }
 
     public boolean move(int targetX, int targetY, ArrayList<Piece> pieces, Piece toTake, ArrayList<Piece> lostPieces) {
-        boolean pinned = isPinned(pieces,targetX, targetY, toTake);
-        if (targetX == x && !pinned) {
+        boolean pinned = isPinned(pieces, targetX, targetY, toTake);
+
+        if (enPassant(targetX, targetY, pieces, toTake, lostPieces) && !pinned && toTake == null) {
+            MOVESOUND.play();
+            super.x = targetX;
+            super.y = targetY;
+            if (isCheck(pieces, toTake)) {
+                CHECKSOUND.play();
+            }
+            moved = true;
+            if(y == 0) {
+                promote(pieces);
+            }
+            return true;
+        }
+        else if (targetX == x && !pinned) {
             if(toTake != null){
                 if(toTake.x == x){
                     return false;
                 }
             }
-            if (side == "light") {
+            else if (side == "light") {
                 if(targetY == y - 1 || (targetY == y - 2 && !moved)) {
+                    if (!moved && targetY == y - 2) {
+                        canEnPassant = true;
+                    }
+                    else {
+                        canEnPassant = false;
+                    }
                     MOVESOUND.play();
                     super.x = targetX;
                     super.y = targetY;
@@ -58,6 +78,12 @@ public class Pawn extends Piece implements Command {
             }
             else {
                 if(targetY == y + 1 || (targetY == y + 2 && !moved)) {
+                    if (!moved && targetY == y + 2) {
+                        canEnPassant = true;
+                    }
+                    else {
+                        canEnPassant = false;
+                    }
                     MOVESOUND.play();
                     super.x = targetX;
                     super.y = targetY;

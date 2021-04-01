@@ -28,10 +28,38 @@ public abstract class Piece extends PApplet implements Command {
     public PShape shape;
     public String pieceSet = "tatiana";
     public boolean moved = false;
+    public boolean canEnPassant = false;
 
     public abstract boolean move(int targetX, int targetY, ArrayList<Piece> pieces, Piece toTake, ArrayList<Piece> lostPieces);
 
     public abstract boolean isCheck(ArrayList<Piece> pieces, Piece toTake);
+
+    public boolean isCheckmate(ArrayList<Piece> pieces, int targetX, int targetY) {
+        /* WIP for testing purposes */
+        return false;
+    }
+
+    // This could be moved to Pawn but needs to be here for testing
+    public boolean enPassant(int targetX, int targetY, ArrayList<Piece> pieces, Piece toTake, ArrayList<Piece> lostPieces) {
+        if (toTake != null || isPinned(pieces, targetX, targetY, toTake)) {
+            return false;
+        }
+        for (Piece piece : pieces) {
+            if (side == "light") {
+                if (piece.side == "dark" && piece.canEnPassant && piece.type == "P" && piece.y == targetY + 1) {
+                    take(pieces, piece, lostPieces);
+                    return true;
+                }
+            }
+            else {
+                if (piece.side == "light" && piece.canEnPassant && piece.type == "P" && piece.y == targetY - 1) {
+                    take(pieces, piece, lostPieces);
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
 
     public boolean isPinned(ArrayList<Piece> pieces, int targetX, int targetY, Piece toTake) {
          int originalX = x;
