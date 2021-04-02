@@ -92,7 +92,7 @@ public abstract class Piece extends PApplet implements Command {
     }
 
     public boolean isInBounds(Piece piece) {
-        if (piece.x <= 7 && piece.x >= 0 && piece.y <= 7 && piece.x >= 0) {
+        if (piece.x <= 7 && piece.x >= 0 && piece.y <= 7 && piece.y >= 0) {
             return true;
         }
         return false;

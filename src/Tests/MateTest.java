@@ -6,7 +6,7 @@ import pieces.PieceFactory;
 
 import java.util.ArrayList;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class MateTest {
 
@@ -37,7 +37,7 @@ public class MateTest {
         Piece testKing = PieceFactory.getPiece("K", "light", 3, 0);
         testBoard.add(testKing);
         // This example should be check but not mate
-        assertTrue(testQueen.isCheckmate(testBoard));
+        assertFalse(testQueen.isCheckmate(testBoard));
     }
     @Test
     public void testFalseCheckmate2() {
@@ -53,6 +53,6 @@ public class MateTest {
         Piece testQueen = PieceFactory.getPiece("Q", "dark", 0, 3);
         testBoard.add(testQueen);
         // This example should also be check but not mate
-        assertTrue(testQueen.isCheckmate(testBoard));
+        assertFalse(testQueen.isCheckmate(testBoard));
     }
 }
