@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="lib" path="Required Libraries/android.jar"/>
+	<classpathentry kind="lib" path="Required Libraries/core.jar"/>
+	<classpathentry kind="lib" path="Required Libraries/javamp3-1.0.4.jar"/>
+	<classpathentry kind="lib" path="Required Libraries/jsyn-20171016.jar"/>
+	<classpathentry kind="lib" path="Required Libraries/sound.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/5"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>

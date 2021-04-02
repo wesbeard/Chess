@@ -34,8 +34,33 @@ public abstract class Piece extends PApplet implements Command {
 
     public abstract boolean isCheck(ArrayList<Piece> pieces, Piece toTake);
 
+    // function to return opposite type of current piece
+    public String oppossiteType() {
+    	if (this.type == "dark") {
+    		return "light";
+    	}
+    	else {
+    		return "dark";
+    	}
+    }
+    
     public boolean isCheckmate(ArrayList<Piece> pieces, int targetX, int targetY) {
         /* WIP for testing purposes */
+//    	for (Piece piece : pieces) {
+//    		if (piece.type = "K") {
+//    			
+//    		}
+//    	}
+    	// maybe check if a space is empty first or if there is a peice there
+    	// then set var to null or to the pace for the toTake parameter
+    	Piece toTake = null;
+    	
+    	// get opposing king to the current piece
+    	Piece king = getKing(pieces, this.oppossiteType());
+    	
+    	if (king.blockedDiagonal(targetX, targetY, pieces, toTake) && king.blockedHorizontal(targetX, targetY, pieces, toTake) && this.isCheck(pieces, toTake)) {
+    		return true;
+    	}    	
         return false;
     }
 

@@ -24,6 +24,6 @@ public class MateTest {
         //  needs the space the piece is moving to)
         // This example moves the queen from 0, 1 to 3, 1 which should be checkmate
         /* WORK IN PROGRESS */
-        assertTrue(testQueen.isCheckmate(testBoard, 3, 1));
+        assertTrue(testQueen.isCheckmate(testBoard, 3, 1) == true);
     }
 }
