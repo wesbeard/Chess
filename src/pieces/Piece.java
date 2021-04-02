@@ -51,16 +51,18 @@ public abstract class Piece extends PApplet implements Command {
 //    			
 //    		}
 //    	}
-    	// maybe check if a space is empty first or if there is a peice there
+    	// maybe check if a space is empty first or if there is a piece there
     	// then set var to null or to the pace for the toTake parameter
     	Piece toTake = null;
     	
     	// get opposing king to the current piece
-    	Piece king = getKing(pieces, this.oppossiteType());
+    	Piece enemyKing = getKing(pieces, type);
     	
-    	if (king.blockedDiagonal(targetX, targetY, pieces, toTake) && king.blockedHorizontal(targetX, targetY, pieces, toTake) && this.isCheck(pieces, toTake)) {
+    	if (enemyKing.blockedDiagonal(enemyKing.x, enemyKing.y, pieces, toTake) && this.isCheck(pieces, toTake)) {
     		return true;
-    	}    	
+    	} else if (enemyKing.blockedHorizontal(enemyKing.x, enemyKing.y, pieces, toTake) && this.isCheck(pieces, toTake)) {
+    		return true;
+    	}
         return false;
     }
 
