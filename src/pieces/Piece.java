@@ -44,25 +44,66 @@ public abstract class Piece extends PApplet implements Command {
     	}
     }
     
-    public boolean isCheckmate(ArrayList<Piece> pieces, int targetX, int targetY) {
-        /* WIP for testing purposes */
-//    	for (Piece piece : pieces) {
-//    		if (piece.type = "K") {
-//    			
-//    		}
-//    	}
-    	// maybe check if a space is empty first or if there is a piece there
-    	// then set var to null or to the pace for the toTake parameter
-    	Piece toTake = null;
-    	
-    	// get opposing king to the current piece
-    	Piece enemyKing = getKing(pieces, type);
-    	
-    	if (enemyKing.blockedDiagonal(enemyKing.x, enemyKing.y, pieces, toTake) && this.isCheck(pieces, toTake)) {
-    		return true;
-    	} else if (enemyKing.blockedHorizontal(enemyKing.x, enemyKing.y, pieces, toTake) && this.isCheck(pieces, toTake)) {
-    		return true;
-    	}
+    public boolean isCheckmate(ArrayList<Piece> pieces) {
+
+        ArrayList<Piece> tempPieces;
+        Piece enemyKing;
+
+        for (int i = 0; i <= 7; i++) {
+            tempPieces = pieces;
+            enemyKing = getKing(tempPieces, type);
+            switch (i) {
+                case 0:
+                    enemyKing.x++;
+                    enemyKing.y++;
+                    break;
+                case 1:
+                    enemyKing.x--;
+                    enemyKing.y--;
+                    break;
+                case 2:
+                    enemyKing.x++;
+                    enemyKing.y--;
+                    break;
+                case 3:
+                    enemyKing.x--;
+                    enemyKing.y++;
+                    break;
+                case 4:
+                    enemyKing.x--;
+                    break;
+                case 5:
+                    enemyKing.x++;
+                    break;
+                case 6:
+                    enemyKing.y--;
+                    break;
+                case 7:
+                    enemyKing.y++;
+                    break;
+            }
+            if (isInBounds(enemyKing) && !isPieceOnSquare(enemyKing.x, enemyKing.y, pieces, null) && !anyCheck(pieces)) {
+                return false;
+            }
+        }
+
+        return true;
+
+    }
+
+    public boolean isInBounds(Piece piece) {
+        if (piece.x <= 7 && piece.x >= 0 && piece.y <= 7 && piece.x >= 0) {
+            return true;
+        }
+        return false;
+    }
+
+    public boolean anyCheck (ArrayList<Piece> pieces) {
+        for (Piece piece : pieces) {
+            if (piece.isCheck(pieces, null)) {
+                return true;
+            }
+        }
         return false;
     }
 
