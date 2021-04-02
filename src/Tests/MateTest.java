@@ -43,9 +43,9 @@ public class MateTest {
     public void testFalseCheckmate2() {
         ArrayList<Piece> testBoard = new ArrayList<>();
         Piece testKing = PieceFactory.getPiece("K","light", 3, 0);
-        testBoard.add(testRook);
+        testBoard.add(testKing);
         Piece testPawn = PieceFactory.getPiece("P","light", 3, 1);
-        testBoard.add(testQueen);
+        testBoard.add(testPawn);
         Piece testBishop = PieceFactory.getPiece("B", "light", 4, 0);
         testBoard.add(testKing);
         Piece testKnight = PieceFactory.getPiece("N", "light", 2, 0);
