@@ -46,6 +46,9 @@ public abstract class Piece extends PApplet implements Command {
         x = targetX;
         y = targetY;
         
+        for (Piece piece : pieces) {
+        	continue;
+        }
         
         x = originalX;
         y = originalY;
