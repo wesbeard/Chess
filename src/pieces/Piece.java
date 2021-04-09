@@ -44,13 +44,8 @@ public abstract class Piece extends PApplet implements Command {
     	// store original coords
     	int originalX = x;
         int originalY = y;
-        
-        for (Piece piece : pieces) {
-        	if (piece.move(targetX, targetY, pieces, toTake, lostPieces)) {
-        		return true;
-        	}
-        }
-        
+
+        // check if the piece can execute the given move or not
         if (this.move(targetX, targetY, pieces, toTake, lostPieces)) {
         	// reset coords to initial coordinates
             x = originalX;
