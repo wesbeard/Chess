@@ -16,6 +16,8 @@ package pieces;
 import main.Util;
 import processing.sound.SoundFile;
 import java.util.ArrayList;
+import java.util.Map;
+
 import Command.Command;
 import static main.Constants.*;
 
@@ -92,6 +94,11 @@ public class King extends Piece implements Command {
     @Override
     public boolean isCheck(ArrayList<Piece> pieces, Piece toTake) {
         return false;
+    }
+
+    @Override
+    public Map<Integer, Integer> possibleMoves(ArrayList<Piece> pieces) {
+        return null;
     }
 
     public boolean castle(ArrayList<Piece> pieces, int castleX, int castleY, int rookX, int rookY, int rookX2, int rookY2, SoundFile castlSound) {

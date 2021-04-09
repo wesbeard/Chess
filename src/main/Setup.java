@@ -17,6 +17,8 @@ package main;
 import interactivity.Popup;
 import interactivity.iButton;
 import pieces.*;
+import processing.sound.SoundFile;
+
 import java.util.ArrayList;
 
 import static main.Constants.*;

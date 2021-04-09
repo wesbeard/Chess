@@ -15,6 +15,8 @@ package pieces;
 import Command.Command;
 import main.Util;
 import java.util.ArrayList;
+import java.util.Map;
+
 import static main.Constants.*;
 
 public class Queen extends Piece implements Command {
@@ -73,5 +75,10 @@ public class Queen extends Piece implements Command {
         }
 
         return false;
+    }
+
+    @Override
+    public Map<Integer, Integer> possibleMoves(ArrayList<Piece> pieces) {
+        return null;
     }
 }

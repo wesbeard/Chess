@@ -15,6 +15,9 @@ package pieces;
 import Command.Command;
 import main.Util;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+
 import static main.Constants.*;
 
 public class Pawn extends Piece implements Command {
@@ -34,14 +37,15 @@ public class Pawn extends Piece implements Command {
     }
 
     public boolean move(int targetX, int targetY, ArrayList<Piece> pieces, Piece toTake, ArrayList<Piece> lostPieces) {
+
         boolean pinned = isPinned(pieces, targetX, targetY, toTake);
 
         if (enPassant(targetX, targetY, pieces, toTake, lostPieces) && !pinned && toTake == null) {
-            MOVESOUND.play();
+            //MOVESOUND.play();
             super.x = targetX;
             super.y = targetY;
             if (isCheck(pieces, toTake)) {
-                CHECKSOUND.play();
+                //CHECKSOUND.play();
             }
             moved = true;
             if(y == 0) {
@@ -63,11 +67,11 @@ public class Pawn extends Piece implements Command {
                     else {
                         canEnPassant = false;
                     }
-                    MOVESOUND.play();
+                    //MOVESOUND.play();
                     super.x = targetX;
                     super.y = targetY;
                     if (isCheck(pieces, toTake)) {
-                        CHECKSOUND.play();
+                        //CHECKSOUND.play();
                     }
                     moved = true;
                     if(y == 0) {
@@ -84,11 +88,11 @@ public class Pawn extends Piece implements Command {
                     else {
                         canEnPassant = false;
                     }
-                    MOVESOUND.play();
+                    //MOVESOUND.play();
                     super.x = targetX;
                     super.y = targetY;
                     if (isCheck(pieces, toTake)) {
-                        CHECKSOUND.play();
+                        //CHECKSOUND.play();
                     }
                     moved = true;
                     if(y == 7) {
@@ -99,15 +103,16 @@ public class Pawn extends Piece implements Command {
             }
         }
         else if ((targetX == x + 1 || targetX == x - 1) && toTake != null && !pinned) {
+
             if (side == "light") {
                 if (targetY == y - 1) {
-                    TAKESOUND.play();
+                    //TAKESOUND.play();
                     super.x = targetX;
                     super.y = targetY;
                     if (isCheck(pieces, toTake)) {
-                        CHECKSOUND.play();
+                        //CHECKSOUND.play();
                     }
-                    take(pieces,toTake, lostPieces);
+                    take(pieces, toTake, lostPieces);
                     moved = true;
                     if(y == 0) {
                         promote(pieces);
@@ -117,11 +122,11 @@ public class Pawn extends Piece implements Command {
             }
             else {
                 if (targetY == y + 1) {
-                    TAKESOUND.play();
+                    //TAKESOUND.play();
                     super.x = targetX;
                     super.y = targetY;
                     if (isCheck(pieces, toTake)) {
-                        CHECKSOUND.play();
+                        //CHECKSOUND.play();
                     }
                     take(pieces,toTake, lostPieces);
                     moved = true;
@@ -133,7 +138,7 @@ public class Pawn extends Piece implements Command {
             }
         }
         System.out.println("Invalid Move P" + Util.convertRank(targetX) + Util.convertFile(targetY));
-        INVALIDSOUND.play();
+        //INVALIDSOUND.play();
         return false;
     }
 
@@ -170,5 +175,28 @@ public class Pawn extends Piece implements Command {
         }
 
         return false;
+    }
+
+    @Override
+    public Map<Integer, Integer> possibleMoves(ArrayList<Piece> pieces) {
+        Map<Integer, Integer> possibles = new HashMap<>();
+        ArrayList<Piece> lostPieces = new ArrayList<>();
+        ArrayList<Piece> originalBoard = pieces;
+        int originalX = x;
+        int originalY = y;
+
+        for (int testX = 0; testX < 8; testX++) {
+            for (int testY = 0; testY < 8; testY++) {
+                pieces = originalBoard;
+                x = originalX;
+                y = originalY;
+                Piece toTake = isOpponentOnSpace(pieces, testX, testY);
+                if (move(testX, testY, pieces, toTake, lostPieces)) {
+                    possibles.put(testX, testY);
+                }
+            }
+        }
+
+        return possibles;
     }
 }

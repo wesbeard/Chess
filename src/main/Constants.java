@@ -38,10 +38,10 @@ public final class Constants {
     public static Color GREY = new Color (150, 150, 150);
 
     // Sounds
-    public static SoundFile MOVESOUND;
-    public static SoundFile TAKESOUND;
-    public static SoundFile CASTLESOUND;
-    public static SoundFile VICTORYSOUND;
-    public static SoundFile INVALIDSOUND;
-    public static SoundFile CHECKSOUND;
+    public static SoundFile MOVESOUND = null;
+    public static SoundFile TAKESOUND = null;
+    public static SoundFile CASTLESOUND = null;
+    public static SoundFile VICTORYSOUND = null;
+    public static SoundFile INVALIDSOUND = null;
+    public static SoundFile CHECKSOUND = null;
 }

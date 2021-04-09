@@ -68,17 +68,7 @@ public class Chess extends PApplet {
     String darkTimerValue = "10:00";
     String lightTimerValue = "10:00";
 
-    public static void main(String[] args) {
-        PApplet.main("main.Chess");
-    }
-
-    public void settings() {
-        size(boardSize + menuWidth, boardSize);
-    }
-
-    public void setup() {
-
-        // Initialize sounds
+    public void initSounds() {
         MOVESOUND = new SoundFile(this, "sound/Move.mp3");
         MOVESOUND.amp((float) .4);
         TAKESOUND = new SoundFile(this, "sound/Take.mp3");
@@ -91,6 +81,19 @@ public class Chess extends PApplet {
         INVALIDSOUND.amp((float) .4);
         CHECKSOUND = new SoundFile(this, "sound/Check.wav");
         CHECKSOUND.amp((float) .1);
+    }
+
+    public static void main(String[] args) {
+        PApplet.main("main.Chess");
+    }
+
+    public void settings() {
+        size(boardSize + menuWidth, boardSize);
+    }
+
+    public void setup() {
+
+        initSounds();
 
         // Window settings
         icon = loadImage("images/icon.png");

@@ -16,6 +16,8 @@ package pieces;
 
 import processing.core.*;
 import java.util.ArrayList;
+import java.util.Map;
+
 import Command.Command;
 
 public abstract class Piece extends PApplet implements Command {
@@ -34,14 +36,33 @@ public abstract class Piece extends PApplet implements Command {
 
     public abstract boolean isCheck(ArrayList<Piece> pieces, Piece toTake);
 
+    public abstract Map<Integer, Integer> possibleMoves(ArrayList<Piece> pieces);
     // function to return opposite type of current piece
-    public String oppossiteType() {
-    	if (this.type == "dark") {
+    public String oppositeSide() {
+    	if (this.side == "dark") {
     		return "light";
     	}
     	else {
     		return "dark";
     	}
+    }
+
+    public Piece isOpponentOnSpace (ArrayList<Piece> pieces, int testX, int testY) {
+        for (Piece piece: pieces) {
+            if (piece.x == testX && piece.y == testY && piece.side != side) {
+                return piece;
+            }
+        }
+        return null;
+    }
+
+    public boolean isFriendlyOnSpace (ArrayList<Piece> pieces, int testX, int testY) {
+        for (Piece piece: pieces) {
+            if (piece.x == testX && piece.y == testY && piece.side == side) {
+                return true;
+            }
+        }
+        return false;
     }
     
     public boolean isCheckmate(ArrayList<Piece> pieces) {
@@ -82,25 +103,35 @@ public abstract class Piece extends PApplet implements Command {
                     enemyKing.y++;
                     break;
             }
-            if (isInBounds(enemyKing) && !isPieceOnSquare(enemyKing.x, enemyKing.y, pieces, null) && !anyCheck(pieces)) {
+            tempPieces = moveKing(oppositeSide(), tempPieces, enemyKing.x, enemyKing.y);
+            if (isInBounds(enemyKing) && !anyCheck(side, tempPieces)) {
                 return false;
             }
         }
-
         return true;
 
     }
 
+    public ArrayList<Piece> moveKing(String side, ArrayList<Piece> tempPieces, int x, int y) {
+        for (Piece piece : tempPieces) {
+            if (piece.side == side && piece.type == "K") {
+                piece.x = x;
+                piece.y = y;
+            }
+        }
+        return tempPieces;
+    }
+
     public boolean isInBounds(Piece piece) {
-        if (piece.x <= 7 && piece.x >= 0 && piece.y <= 7 && piece.x >= 0) {
+        if (piece.x <= 7 && piece.x >= 0 && piece.y <= 7 && piece.y >= 0) {
             return true;
         }
         return false;
     }
 
-    public boolean anyCheck (ArrayList<Piece> pieces) {
+    public boolean anyCheck (String side, ArrayList<Piece> pieces) {
         for (Piece piece : pieces) {
-            if (piece.isCheck(pieces, null)) {
+            if (piece.side == side && piece.isCheck(pieces, null)) {
                 return true;
             }
         }

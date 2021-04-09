@@ -6,6 +6,7 @@ import pieces.PieceFactory;
 
 import java.util.ArrayList;
 
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class MateTest {
@@ -20,11 +21,20 @@ public class MateTest {
         Piece testKing = PieceFactory.getPiece("K", "light", 3, 0);
         testBoard.add(testKing);
         // Tests a basic checkmate with queen and rook
-        // (I'm thinking that it'll work similar to pinned where it
-        //  needs the space the piece is moving to)
-        // This example should be checkmate
         assertTrue(testQueen.isCheckmate(testBoard));
+    }
 
+    @Test
+    public void testCheckmate2() {
+        ArrayList<Piece> testBoard = new ArrayList<>();
+        Piece testRook1 = PieceFactory.getPiece("R","dark", 7, 0);
+        testBoard.add(testRook1);
+        Piece testRook2 = PieceFactory.getPiece("R","dark", 7, 1);
+        testBoard.add(testRook2);
+        Piece testKing = PieceFactory.getPiece("K", "light", 0, 0);
+        testBoard.add(testKing);
+        // Tests the double rook checkmate
+        assertTrue(testRook1.isCheckmate(testBoard));
     }
     
     @Test
@@ -37,8 +47,9 @@ public class MateTest {
         Piece testKing = PieceFactory.getPiece("K", "light", 3, 0);
         testBoard.add(testKing);
         // This example should be check but not mate
-        assertTrue(testQueen.isCheckmate(testBoard));
+        assertFalse(testQueen.isCheckmate(testBoard));
     }
+
     @Test
     public void testFalseCheckmate2() {
         ArrayList<Piece> testBoard = new ArrayList<>();
@@ -47,12 +58,12 @@ public class MateTest {
         Piece testPawn = PieceFactory.getPiece("P","light", 3, 1);
         testBoard.add(testPawn);
         Piece testBishop = PieceFactory.getPiece("B", "light", 4, 0);
-        testBoard.add(testKing);
+        testBoard.add(testBishop);
         Piece testKnight = PieceFactory.getPiece("N", "light", 2, 0);
         testBoard.add(testKnight);
         Piece testQueen = PieceFactory.getPiece("Q", "dark", 0, 3);
         testBoard.add(testQueen);
         // This example should also be check but not mate
-        assertTrue(testQueen.isCheckmate(testBoard));
+        assertFalse(testQueen.isCheckmate(testBoard));
     }
 }
