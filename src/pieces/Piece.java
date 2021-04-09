@@ -34,6 +34,25 @@ public abstract class Piece extends PApplet implements Command {
 
     public abstract boolean isCheck(ArrayList<Piece> pieces, Piece toTake);
 
+    // check if a given move is valid for a piece
+    public boolean isValidMove(ArrayList<Piece> pieces, int targetX, int targetY, Piece toTake) {
+    	
+    	if (isCheck(pieces, toTake) || isPinned(pieces, targetX, targetY, toTake)) {
+    		return false;
+    	}
+    	
+    	int originalX = x;
+        int originalY = y;
+        x = targetX;
+        y = targetY;
+        
+        
+        x = originalX;
+        y = originalY;
+        return true;
+        
+    }
+    
     // function to return opposite type of current piece
     public String oppossiteType() {
     	if (this.type == "dark") {
