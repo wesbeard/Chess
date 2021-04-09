@@ -1,12 +1,10 @@
 package Tests;
 
-import org.junit.jupiter.api.Test;
 import pieces.Piece;
 import pieces.PieceFactory;
-
 import java.util.ArrayList;
-
 import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.Test;
 
 public class MateTest {
 
@@ -47,7 +45,7 @@ public class MateTest {
         Piece testPawn = PieceFactory.getPiece("P","light", 3, 1);
         testBoard.add(testPawn);
         Piece testBishop = PieceFactory.getPiece("B", "light", 4, 0);
-        testBoard.add(testKing);
+        testBoard.add(testBishop);
         Piece testKnight = PieceFactory.getPiece("N", "light", 2, 0);
         testBoard.add(testKnight);
         Piece testQueen = PieceFactory.getPiece("Q", "dark", 0, 3);
