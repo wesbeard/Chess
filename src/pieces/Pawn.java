@@ -37,7 +37,6 @@ public class Pawn extends Piece implements Command {
     }
 
     public boolean move(int targetX, int targetY, ArrayList<Piece> pieces, Piece toTake, ArrayList<Piece> lostPieces) {
-
         boolean pinned = isPinned(pieces, targetX, targetY, toTake);
 
         if (enPassant(targetX, targetY, pieces, toTake, lostPieces) && !pinned && toTake == null) {

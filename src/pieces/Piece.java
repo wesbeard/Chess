@@ -36,7 +36,35 @@ public abstract class Piece extends PApplet implements Command {
 
     public abstract boolean isCheck(ArrayList<Piece> pieces, Piece toTake);
 
+
     public abstract Map<Integer, Integer> possibleMoves(ArrayList<Piece> pieces);
+
+    // check if a given move is valid for a piece
+    public boolean isValidMove(ArrayList<Piece> pieces, int targetX, int targetY, Piece toTake, ArrayList<Piece> lostPieces) {
+    	
+    	if (isCheck(pieces, toTake) || isPinned(pieces, targetX, targetY, toTake)) {
+    		return false;
+    	}
+    	
+    	// store original coords
+    	int originalX = x;
+        int originalY = y;
+
+        // check if the piece can execute the given move or not
+        if (this.move(targetX, targetY, pieces, toTake, lostPieces)) {
+        	// reset coords to initial coordinates
+            x = originalX;
+            y = originalY;
+        	return true;
+        }
+        
+        // reset coords to initial coordinates
+        x = originalX;
+        y = originalY;
+        return false;
+        
+    }
+
     // function to return opposite type of current piece
     public String oppositeSide() {
     	if (this.side == "dark") {
@@ -128,6 +156,7 @@ public abstract class Piece extends PApplet implements Command {
         }
         return false;
     }
+
 
     public boolean anyCheck (String side, ArrayList<Piece> pieces) {
         for (Piece piece : pieces) {
