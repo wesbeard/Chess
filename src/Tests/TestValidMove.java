@@ -54,7 +54,9 @@ public class TestValidMove {
         testBoard.add(testKnight);
         Piece testRook = PieceFactory.getPiece("N","dark", 4, 2);
         testBoard.add(testRook);
+        // make demo lost pieces
+        ArrayList<Piece> lostPieces = new ArrayList<>();
         
-        assertEquals(testKing.isValidMove(testBoard, 4, 1, null), true);
+        assertEquals(testKing.isValidMove(testBoard, 4, 1, null, lostPieces), true);
 	}
 }

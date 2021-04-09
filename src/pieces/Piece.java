@@ -35,24 +35,33 @@ public abstract class Piece extends PApplet implements Command {
     public abstract boolean isCheck(ArrayList<Piece> pieces, Piece toTake);
 
     // check if a given move is valid for a piece
-    public boolean isValidMove(ArrayList<Piece> pieces, int targetX, int targetY, Piece toTake) {
+    public boolean isValidMove(ArrayList<Piece> pieces, int targetX, int targetY, Piece toTake, ArrayList<Piece> lostPieces) {
     	
     	if (isCheck(pieces, toTake) || isPinned(pieces, targetX, targetY, toTake)) {
     		return false;
     	}
     	
+    	// store original coords
     	int originalX = x;
         int originalY = y;
-        x = targetX;
-        y = targetY;
         
         for (Piece piece : pieces) {
-        	continue;
+        	if (piece.move(targetX, targetY, pieces, toTake, lostPieces)) {
+        		return true;
+        	}
         }
         
+        if (this.move(targetX, targetY, pieces, toTake, lostPieces)) {
+        	// reset coords to initial coordinates
+            x = originalX;
+            y = originalY;
+        	return true;
+        }
+        
+        // reset coords to initial coordinates
         x = originalX;
         y = originalY;
-        return true;
+        return false;
         
     }
     
@@ -120,7 +129,7 @@ public abstract class Piece extends PApplet implements Command {
         return false;
     }
 
-    public boolean anyCheck (ArrayList<Piece> pieces) {
+    public boolean anyCheck(ArrayList<Piece> pieces) {
         for (Piece piece : pieces) {
             if (piece.isCheck(pieces, null)) {
                 return true;
